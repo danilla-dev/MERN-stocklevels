@@ -1,0 +1,25 @@
+.new_product_form {
+	flex-direction: column;
+	justify-content: start;
+	align-items: start;
+	width: 100%;
+	min-height: 100%;
+	padding: 0.5em;
+	border: transparent;
+	box-shadow: unset;
+	button {
+		max-width: 300px;
+		font-size: 1.8rem;
+	}
+}
+
+@media (min-width: 996px) {
+	.new_product_form_container {
+		.new_product_form {
+			height: 100%;
+			button {
+				max-width: 300px;
+			}
+		}
+	}
+}

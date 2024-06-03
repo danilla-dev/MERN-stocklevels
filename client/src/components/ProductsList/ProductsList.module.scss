@@ -1,0 +1,13 @@
+.products_list_container {
+	position: relative;
+	min-height: 90vh;
+	width: 100%;
+	margin-top: 2em;
+	ul {
+		width: 100%;
+	}
+	h2 {
+		display: block;
+		text-align: center;
+	}
+}

@@ -1,0 +1,13 @@
+.grid_layout {
+	// padding: 70px 0;
+}
+@media (min-width: 996px) {
+	.grid_layout {
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(2, 200px) repeat(2, 1fr);
+		grid-template-rows: 70px 1fr 70px;
+		grid-column-gap: 0px;
+		grid-row-gap: 0px;
+	}
+}

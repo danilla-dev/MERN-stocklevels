@@ -1,0 +1,45 @@
+.landing_info {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: auto;
+	// width: 90%;
+}
+
+.landing_info_context {
+	background-color: #a3a3a363;
+	padding: 1em;
+	border: transparent;
+	border-radius: 10px;
+	h1 {
+		text-align: center;
+		font-size: 4.5rem;
+	}
+	p {
+		font-size: 2rem;
+		text-align: center;
+		margin-top: 0.75em;
+	}
+}
+.buttons {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	margin-top: 1em;
+	width: 100%;
+	font-size: 2rem;
+	text-transform: uppercase;
+}
+.landing_info_image {
+	display: none;
+}
+@media (min-width: 996px) {
+	.landing_info_context {
+		width: 50%;
+	}
+	.landing_info_image {
+		display: block;
+		height: 100%;
+		width: 50%;
+	}
+}

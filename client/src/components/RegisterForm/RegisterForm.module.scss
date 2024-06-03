@@ -1,0 +1,12 @@
+.form_container {
+	min-height: 300px;
+	align-items: center;
+	justify-content: center;
+
+	label {
+		text-transform: none;
+	}
+	button {
+		margin: 0.5em auto;
+	}
+}

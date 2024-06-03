@@ -1,0 +1,25 @@
+.product_details {
+	height: 100%;
+	width: 100%;
+	padding: 1em;
+}
+.product-header {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row-reverse;
+	align-items: center;
+	justify-content: space-evenly;
+	width: 100%;
+	font-size: 2rem;
+	font-weight: bold;
+	text-align: center;
+	margin: 0.5em auto;
+	.img-preview-frame {
+		margin: 0;
+	}
+}
+@media (min-width: 996px) {
+	.product-header {
+		font-size: 2.4rem;
+	}
+}

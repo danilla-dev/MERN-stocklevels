@@ -1,0 +1,40 @@
+.filter_products_window {
+	background-color: #fff;
+	width: 100%;
+	min-width: 300px;
+	margin-top: 1em;
+	overflow: hidden;
+	form {
+		flex-direction: row;
+		justify-content: center;
+		overflow: hidden;
+		border: transparent;
+		padding: 1em;
+		button {
+			font-size: 1.4rem;
+			margin: 0;
+		}
+	}
+}
+
+.buttons_container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 1em;
+	flex-wrap: wrap;
+	width: 100%;
+}
+@media (min-width: 996px) {
+	.filter_products_window {
+		form {
+			font-size: 1.6rem;
+			justify-content: space-between;
+			input,
+			select,
+			button {
+				font-size: 1.6rem;
+			}
+		}
+	}
+}
