@@ -1,58 +1,57 @@
 .widget {
-	display: flex;
-	justify-content: space-between;
-	padding: 1.5em;
-	margin-top: 1em;
-	border: 1px solid silver;
-	border-top: 10px solid $mainColor;
-	background-color: white;
-	border-radius: 5px;
-	width: 100%;
-	min-width: 300px;
-	box-shadow: 0px 0px 16px -5px rgb(48, 48, 51);
-
-	h2 {
-		margin: 0.25em 0;
-		font-size: 3rem;
-		font-weight: bold;
-		color: $h2Color;
-		text-transform: unset;
-		text-align: center;
-	}
-	h3 {
-		font-size: 2.6rem;
-		font-weight: bold;
-	}
-	h4 {
-		font-size: 2rem;
-	}
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5em;
+  margin-top: 1em;
+  border: 1px solid silver;
+  border-top: 10px solid $mainColor;
+  background-color: white;
+  border-radius: 5px;
+  width: 100%;
+  min-width: 300px;
+  box-shadow: 0px 0px 16px -5px rgb(48, 48, 51);
+  h2 {
+    margin: 0.25em 0;
+    font-size: 3rem;
+    font-weight: bold;
+    color: $h2Color;
+    text-transform: unset;
+    text-align: center;
+  }
+  h3 {
+    font-size: 2.6rem;
+    font-weight: bold;
+  }
+  h4 {
+    font-size: 2rem;
+  }
 }
 .border {
-	&-green {
-		border-top: 10px solid rgb(35, 189, 84);
-	}
-	&-purple {
-		border-top: 10px solid rgb(93, 28, 204);
-	}
-	&-red {
-		border-top: 10px solid rgb(204, 48, 28);
-	}
+  &-green {
+    border-top: 10px solid rgb(35, 189, 84);
+  }
+  &-purple {
+    border-top: 10px solid rgb(93, 28, 204);
+  }
+  &-red {
+    border-top: 10px solid rgb(204, 48, 28);
+  }
 }
 @media (min-width: 996px) {
-	.widget {
-		margin-top: 2em;
-	}
-	.mini-widget {
-		max-width: calc(50% - 1em);
-		height: 400px;
-	}
-	.circle-widget {
-		border: transparent;
-		border-radius: 50%;
-		height: 400px;
-		width: 400px;
-	}
-	.low-data-widget {
-		justify-content: start;
-	}
+  .widget {
+    margin-top: 2em;
+  }
+  .mini-widget {
+    max-width: calc(50% - 1em);
+    height: 400px;
+  }
+  .circle-widget {
+    border: transparent;
+    border-radius: 50%;
+    height: 400px;
+    width: 400px;
+  }
+  .low-data-widget {
+    justify-content: start;
+  }
 }
