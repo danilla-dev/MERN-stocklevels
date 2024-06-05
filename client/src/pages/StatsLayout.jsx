@@ -74,6 +74,7 @@ const StatsLayout = memo(() => {
             size="small"
             needConfirm
             disabledDate={disabledDate}
+            style={{ background: "#d5d7dd" }}
             onChange={(date) => setDateRange(date, "start")}
             defaultValue={date.startDate}
           />

@@ -9,7 +9,7 @@
   width: 100%;
   max-width: 400px;
   background-color: #ffff;
-  border-left: 5px solid $mainColor;
+  border-left: 5px solid rgba(93, 28, 204, 0.6);
   z-index: 101;
   transition: transform 0.3s;
   overflow-y: scroll;
@@ -22,12 +22,15 @@
     }
   }
 }
+.drawer.glass {
+  background: rgba(206, 213, 228, 0.9);
+}
 .drawer.lg {
   max-width: 800px;
 }
 .drawer.inside {
   z-index: 105;
-  border-left: 5px solid $GreenHover;
+  border-left: 5px solid rgba(35, 189, 84, 0.6);
 }
 .drawer-close {
   transform: translateX(550px);

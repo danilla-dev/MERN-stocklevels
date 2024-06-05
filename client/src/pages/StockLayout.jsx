@@ -1,11 +1,13 @@
 import FilterProductsWindow from "../components/FilterProductsWindow/FilterProductsWindow";
-import FlexContainer from "../components/FlexContainer/FlexContainer";
+import Widget from "../components/Widget/Widget";
 import ProductsList from "../components/ProductsList/ProductsList";
 const StockLayout = () => {
   return (
     <>
       <FilterProductsWindow />
-      <ProductsList />
+      <Widget text="Stock">
+        <ProductsList />
+      </Widget>
     </>
   );
 };

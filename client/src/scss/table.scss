@@ -3,11 +3,8 @@
   flex-direction: column;
   justify-content: start;
   width: 100%;
-  border: 1px solid $inputBorder;
-  border-radius: 5px;
-  background: rgba(140, 156, 195, 1);
-  overflow-x: scroll;
-
+  background: transparent;
+  overflow: auto;
   ul {
     margin-top: 0.5em;
     font-size: 2rem;

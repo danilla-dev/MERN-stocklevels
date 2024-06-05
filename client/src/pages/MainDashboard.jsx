@@ -161,7 +161,7 @@ const MainDashboard = () => {
         />
       </Widget>
 
-      <Widget text="Last week sales history" mini>
+      <Widget text="Week sales history" mini>
         <Table
           data={sales}
           columns={columnsAllSales}

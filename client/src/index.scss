@@ -65,11 +65,17 @@ button {
     background-color: gray;
   }
 }
+
 table {
-  background: rgba(140, 156, 195, 0.1);
+  background: rgb(191 204 233 / 85%);
   th.ant-table-cell {
-    background: rgba(140, 156, 195, 0.4) !important;
+    /// hader
+    background: rgba(113, 130, 168, 0.55) !important;
+    border-radius: 0 !important;
     border: transparent;
+  }
+  td.ant-table-cell.ant-table-column-sort {
+    background: transparent;
   }
   td.ant-table-cell {
     a {
@@ -77,23 +83,22 @@ table {
     }
   }
   tr:nth-child(even) {
-    background: rgba(117, 131, 168, 0.458) !important;
+    background: rgba(140, 156, 195, 0.3) !important;
   }
   .ant-table-cell-row-hover {
-    background-color: rgba(186, 196, 219, 0.426) !important;
-  }
-}
-.ant-table-wrapper {
-  .ant-table {
-    background: rgb(191 204 233 / 10%);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background-color: $LightBlue !important;
+    color: white;
+    a,
+    span {
+      color: white !important;
+    }
   }
 }
 
+.ant-picker-panel,
+.ant-picker-footer {
+  background: #d5d7dd !important;
+}
 #blur {
   display: none;
   position: absolute;
@@ -118,19 +123,17 @@ table {
   background-attachment: fixed;
 }
 .glass {
-  background: rgb(191 204 233 / 70%);
+  background: rgb(191 204 233 / 85%);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 .ant-picker {
   background: transparent;
   border-color: $inputBorder;
 }
 .store-logo {
-  height: 50px;
+  height: 75px;
   aspect-ratio: 1/1;
   border-radius: 50%;
 }
@@ -194,11 +197,12 @@ table {
 }
 .logout-btn {
   background-color: transparent;
-  color: $mainColor;
-  border: 1px solid $mainColor;
+  color: $Purple;
+  border: 1px solid $Purple;
   font-weight: bold;
   font-size: 1.6rem;
   &:hover {
+    background-color: $Purple;
     color: white;
   }
 }
@@ -264,7 +268,7 @@ table {
 .nav-link.active-menu:last-child {
   svg,
   span {
-    color: $mainColor;
+    color: $Purple;
   }
 }
 .span-color {

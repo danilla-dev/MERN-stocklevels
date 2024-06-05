@@ -6,14 +6,17 @@ import SubmitButton from "../SubmitButton/SubmitButton";
 import FormSelect from "../FormSelect/FormSelect";
 import NewProductForm from "../NewProductForm/NewProductForm";
 import { useProductsContext } from "../../hooks/useProductsContext";
+import { useStoreContext } from "../../hooks/useStoreContext";
 import { useDrawerContext } from "../../hooks/useDrawerContext";
 import { getFilterProducts } from "../../api/apiFunctions";
-import { categories } from "../../constants/categories";
+import { categoriesWithSubcategories } from "../../constants/categories";
 import SaleForm from "../SaleForm/SaleForm";
 
 const FilterProductsWindow = () => {
   const { products, isLoading, dispatch, setIsLoading } = useProductsContext();
   const { toggleOpen, setDrawerSize } = useDrawerContext();
+  const { storeData } = useStoreContext();
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     product_id: "",
@@ -31,6 +34,9 @@ const FilterProductsWindow = () => {
     e.preventDefault();
     getFilterProducts(dispatch, setIsLoading, formData);
   };
+  const subCategories = categoriesWithSubcategories.find(
+    (category) => category.category === storeData.category
+  ).subcategories;
 
   return (
     <div className={`${styles.filter_products_window} glass`}>
@@ -39,7 +45,7 @@ const FilterProductsWindow = () => {
           type="text"
           name="product_id"
           row
-          labelText="id"
+          labelText="ID"
           value={formData.product_id}
           setFormData={setFormData}
         />
@@ -47,13 +53,14 @@ const FilterProductsWindow = () => {
           type="text"
           name="name"
           row
+          labelText="Name"
           value={formData.name}
           setFormData={setFormData}
         />
         <FormSelect
-          data={categories}
+          data={subCategories}
           name="category"
-          labelText="category"
+          labelText="Category"
           row
           setFormData={setFormData}
         />

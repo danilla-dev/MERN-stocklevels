@@ -37,7 +37,7 @@ const Drawer = () => {
       {drawerContext}
       {insideContext && (
         <>
-          <div className=" drawer inside ">
+          <div className=" drawer inside glass ">
             <button
               onClick={() => {
                 setInsideContext("");
