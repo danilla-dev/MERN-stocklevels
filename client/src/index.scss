@@ -137,7 +137,39 @@ table {
   aspect-ratio: 1/1;
   border-radius: 50%;
 }
-
+.buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  flex-wrap: wrap;
+  padding: 0 0.5em;
+  width: 100%;
+  button {
+    margin-left: 1em;
+    margin-bottom: 1em;
+  }
+}
+.icon-btn-text {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  transition: 0.3s;
+}
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.1em 0.2em !important;
+  svg {
+    font-size: 2.8rem;
+  }
+  &:hover {
+    .icon-btn-text {
+      opacity: 1;
+      width: 120px;
+    }
+  }
+}
 .action-buttons {
   display: flex;
   flex: 1;

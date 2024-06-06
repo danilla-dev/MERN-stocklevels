@@ -5,7 +5,6 @@ import Table from "../Table/Table";
 import Product from "../Product/Product";
 import { useProductsContext } from "../../hooks/useProductsContext";
 import { Spin } from "antd";
-import Drawer from "../Drawer/Drawer";
 import { DrawerContext } from "../../contexts/DrawerContext";
 import { GoAlertFill } from "react-icons/go";
 
@@ -82,6 +81,7 @@ const ProductsList = () => {
               data={products}
               size={"small"}
               pagination
+              buttons
             />
           ) : (
             <p>No products in store yet.</p>

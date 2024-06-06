@@ -5,7 +5,7 @@ const StockLayout = () => {
   return (
     <>
       <FilterProductsWindow />
-      <Widget text="Stock">
+      <Widget>
         <ProductsList />
       </Widget>
     </>

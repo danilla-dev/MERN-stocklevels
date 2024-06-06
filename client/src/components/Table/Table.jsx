@@ -1,8 +1,15 @@
 import { Link } from "react-router-dom";
 import styles from "./Table.module.scss";
+import { RiAddBoxFill, RiMoneyDollarBoxFill } from "react-icons/ri";
+import NewProductForm from "../NewProductForm/NewProductForm";
+import SaleForm from "../SaleForm/SaleForm";
+import { useDrawerContext } from "../../hooks/useDrawerContext";
+
 import { Table as TableAntd } from "antd";
 
-const Table = ({ data, columns, size, pagination, expandable }) => {
+const Table = ({ data, columns, size, pagination, expandable, buttons }) => {
+  const { toggleOpen, setDrawerSize } = useDrawerContext();
+
   const dataTable = data.map((element, index) => {
     return {
       ...element,
@@ -10,8 +17,38 @@ const Table = ({ data, columns, size, pagination, expandable }) => {
     };
   });
 
+  const togglePopup = (e, size, context) => {
+    e.preventDefault();
+    setDrawerSize(size);
+    toggleOpen(context);
+  };
+
   return (
     <div className={`table`}>
+      {buttons && (
+        <div className="buttons-container">
+          <button
+            className="btn icon-btn logout-btn"
+            onClick={(e) => {
+              togglePopup(e, "sm", <NewProductForm />);
+              navigate("/dashboard/stock/product/add");
+            }}
+          >
+            <p className="icon-btn-text">Add product</p>
+            <RiAddBoxFill />
+          </button>
+          <button
+            className="btn icon-btn logout-btn"
+            onClick={(e) => {
+              togglePopup(e, "sm", <SaleForm />);
+              navigate("/dashboard/stock/product/sell");
+            }}
+          >
+            <p className="icon-btn-text">Sell product</p>
+            <RiMoneyDollarBoxFill />
+          </button>
+        </div>
+      )}
       <TableAntd
         columns={columns}
         pagination={pagination ? pagination : false}

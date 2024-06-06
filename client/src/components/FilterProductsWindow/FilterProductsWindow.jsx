@@ -1,34 +1,23 @@
 import { useEffect, useState, useContext } from "react";
-import { useNavigate, Navigate } from "react-router-dom";
 import styles from "./FilterProductsWindow.module.scss";
 import FormRow from "../FormRow/FormRow";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import FormSelect from "../FormSelect/FormSelect";
-import NewProductForm from "../NewProductForm/NewProductForm";
 import { useProductsContext } from "../../hooks/useProductsContext";
 import { useStoreContext } from "../../hooks/useStoreContext";
-import { useDrawerContext } from "../../hooks/useDrawerContext";
 import { getFilterProducts } from "../../api/apiFunctions";
 import { categoriesWithSubcategories } from "../../constants/categories";
-import SaleForm from "../SaleForm/SaleForm";
 
 const FilterProductsWindow = () => {
   const { products, isLoading, dispatch, setIsLoading } = useProductsContext();
-  const { toggleOpen, setDrawerSize } = useDrawerContext();
+
   const { storeData } = useStoreContext();
 
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     product_id: "",
     name: "",
     category: "",
   });
-
-  const togglePopup = (e, size, context) => {
-    e.preventDefault();
-    setDrawerSize(size);
-    toggleOpen(context);
-  };
 
   const handleFilterProducts = (e) => {
     e.preventDefault();
@@ -65,26 +54,8 @@ const FilterProductsWindow = () => {
           setFormData={setFormData}
         />
 
-        <div className={styles.buttons_container}>
+        <div className="buttons-container">
           <SubmitButton />
-          <button
-            className="btn"
-            onClick={(e) => {
-              togglePopup(e, "sm", <NewProductForm />);
-              navigate("/dashboard/stock/product/add");
-            }}
-          >
-            Add new
-          </button>
-          <button
-            className="btn"
-            onClick={(e) => {
-              togglePopup(e, "sm", <SaleForm />);
-              navigate("/dashboard/stock/product/sell");
-            }}
-          >
-            Sell product
-          </button>
         </div>
       </form>
     </div>
