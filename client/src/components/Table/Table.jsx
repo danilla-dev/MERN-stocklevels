@@ -28,23 +28,21 @@ const Table = ({ data, columns, size, pagination, expandable, buttons }) => {
       {buttons && (
         <div className="buttons-container">
           <button
-            className="btn icon-btn logout-btn"
+            className="btn icon-btn "
             onClick={(e) => {
               togglePopup(e, "sm", <NewProductForm />);
               navigate("/dashboard/stock/product/add");
             }}
           >
-            <p className="icon-btn-text">Add product</p>
             <RiAddBoxFill />
           </button>
           <button
-            className="btn icon-btn logout-btn"
+            className="btn icon-btn "
             onClick={(e) => {
               togglePopup(e, "sm", <SaleForm />);
               navigate("/dashboard/stock/product/sell");
             }}
           >
-            <p className="icon-btn-text">Sell product</p>
             <RiMoneyDollarBoxFill />
           </button>
         </div>

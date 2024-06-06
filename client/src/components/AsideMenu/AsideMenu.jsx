@@ -17,11 +17,9 @@ const AsideMenu = () => {
 				{asideMenuButtons.map((btn, index) => {
 					return (
 						<li key={index}>
-							<div className={styles.menu_item}>
 								<NavLink to={btn.path} end className={({ isActive }) => (isActive ? 'nav-link active-menu' : '')}>
 									{btn.icon} <span className='span-color'>{btn.name}</span>
 								</NavLink>
-							</div>
 						</li>
 					)
 				})}

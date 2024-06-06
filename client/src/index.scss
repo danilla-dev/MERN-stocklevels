@@ -67,10 +67,10 @@ button {
 }
 
 table {
-  background: rgb(191 204 233 / 85%);
+  background: $GlassColor;
   th.ant-table-cell {
     /// hader
-    background: rgba(113, 130, 168, 0.55) !important;
+    background: rgba(133, 148, 180, 0.55) !important;
     border-radius: 0 !important;
     border: transparent;
   }
@@ -123,10 +123,10 @@ table {
   background-attachment: fixed;
 }
 .glass {
-  background: rgb(191 204 233 / 85%);
+  background: $GlassColor;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 .ant-picker {
   background: transparent;
@@ -147,27 +147,6 @@ table {
   button {
     margin-left: 1em;
     margin-bottom: 1em;
-  }
-}
-.icon-btn-text {
-  opacity: 0;
-  width: 0;
-  overflow: hidden;
-  transition: 0.3s;
-}
-.icon-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.1em 0.2em !important;
-  svg {
-    font-size: 2.8rem;
-  }
-  &:hover {
-    .icon-btn-text {
-      opacity: 1;
-      width: 120px;
-    }
   }
 }
 .action-buttons {
@@ -193,6 +172,20 @@ table {
   &:hover {
     background-color: $mainColorBtnHover;
   }
+}
+
+.btn.icon-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  padding: 0.25em;
+  svg{
+    color: $mainColor;
+    font-size: 3.2rem;
+
+  }
+  
 }
 .btn.delete {
   background-color: transparent;
@@ -297,12 +290,7 @@ table {
   width: 100vw;
 }
 
-.nav-link.active-menu:last-child {
-  svg,
-  span {
-    color: $Purple;
-  }
-}
+
 .span-color {
   color: $mainColor;
   font-weight: bold;
