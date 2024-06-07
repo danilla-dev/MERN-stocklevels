@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { deleteProduct, getProduct, getSalesOfProduct } from '../../api/apiFunctions'
 import { useProductsContext } from '../../hooks/useProductsContext'
 import { useDrawerContext } from '../../hooks/useDrawerContext'
@@ -104,14 +104,18 @@ const Product = () => {
 	const { setAlertData } = useContext(AlertContext)
 
 	const { id } = useParams()
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		getProduct(dispatch, id)
 		getSalesOfProduct(salesDispatch, id)
 	}, [dispatch, salesDispatch, products])
 
+	const handleOpenInsideDrawer = context => {}
+
 	const handleOpenSellDrawer = e => {
 		setInsideContext(<SaleForm id={id} ean={product.EAN} />)
+		navigate(`/dashboard/stock/product/details/${id}/sell`)
 	}
 	const handleDeleteProduct = async e => {
 		const isConfirmed = window.confirm(`Are you sure to delete product with ID:${id}?`)
@@ -122,6 +126,7 @@ const Product = () => {
 	}
 	const handleEditProduct = e => {
 		setInsideContext(<EditProductForm id={id} product={product} />)
+		navigate(`/dashboard/stock/product/details/${id}/edit`)
 	}
 	return (
 		<>
@@ -147,9 +152,6 @@ const Product = () => {
 									<p>LOW STOCK LEVEL!</p>
 								</div>
 							)}
-							{/* <div className='best-icon st details'>
-								<MdStars />
-							</div> */}
 						</div>
 					</div>
 

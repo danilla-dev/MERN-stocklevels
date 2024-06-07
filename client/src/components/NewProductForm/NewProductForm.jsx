@@ -7,7 +7,7 @@ import { useProductsContext } from '../../hooks/useProductsContext'
 import { useStoreContext } from '../../hooks/useStoreContext'
 import { postProduct } from '../../api/apiFunctions'
 import { FaUpload } from 'react-icons/fa6'
-import { categoriesWithSubcategories } from '../../constants/categories'
+import { getSubCategories } from '../../constants/categories'
 import { AlertContext } from '../../contexts/AlertContext'
 
 const INPUTS = [
@@ -120,10 +120,6 @@ const NewProductForm = () => {
 		await postProduct(dispatch, data, setFormData, setImageUrl, setAlertData, setErrorMessage)
 	}
 
-	const subCategories = categoriesWithSubcategories.find(
-		category => category.category === storeData.category
-	).subcategories
-
 	return (
 		<form className='form form-drawer' onSubmit={handleCreateProduct}>
 			<h2 className='header'>Add new product</h2>
@@ -147,7 +143,7 @@ const NewProductForm = () => {
 				{imageUrl ? <img src={imageUrl} alt='upload product image' className='img' /> : <FaUpload />}
 			</div>
 			<FormSelect
-				data={subCategories}
+				data={getSubCategories(storeData)}
 				name='category'
 				setFormData={setFormData}
 				value={formData.category}

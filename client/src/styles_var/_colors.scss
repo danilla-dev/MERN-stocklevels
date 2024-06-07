@@ -2,15 +2,21 @@
 $mainColor: #4169e1;
 $LightBlue: #8097dbab;
 $mainColorBtnHover: #2b52c5;
-$GlassColor: rgba(228, 232, 241, 0.9);
+$GlassColor: rgba(236, 236, 238, 0.9);
 $h2Color: #0b2676;
-$Purple: #7e3ae4;
+$Purple: rgb(126, 58, 228);
 $darkWhite: #d4d4e0;
-$Black: rgb(49, 46, 46);
-$Red: rgb(221, 52, 46);
-$RedHover: rgb(187, 37, 32);
-$Green: rgb(36, 180, 36);
-$GreenHover: rgb(29, 145, 29);
+$Black: rgba(49, 46, 46, 0.8);
+$Red: rgba(221, 52, 46, 0.8);
+$Green: rgba(36, 180, 36, 0.75);
+
+$RedHover: rgba(187, 37, 32, 0.85);
+$GreenHover: rgba(29, 145, 29, 0.85);
+
 $inputBorder: #757070b4;
-$Aside: rgb(25, 40, 77);
-/// dark mode
+
+// widget borders ///////////////////////
+$RedBorder: rgba(204, 48, 28, 0.65);
+$GreenBorder: rgba(35, 189, 84, 0.65);
+$PurpleBorder: rgba(93, 28, 204, 0.65);
+$BlueBorder: rgba(65, 105, 225, 0.65);

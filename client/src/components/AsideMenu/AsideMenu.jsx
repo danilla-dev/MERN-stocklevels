@@ -6,10 +6,10 @@ import { IoDocumentTextSharp } from 'react-icons/io5'
 const AsideMenu = () => {
 	const asideMenuButtons = [
 		{ name: 'Dashboard', path: '/dashboard', icon: <AiFillDashboard /> },
-		{ name: 'Warehouse', path: '/dashboard/stock', icon: <FaWarehouse /> },
-		{ name: 'Stats', path: '/dashboard/stats', icon: <FaChartLine /> },
-		{ name: 'Reports', path: '/dashboard/reports', icon: <IoDocumentTextSharp /> },
-		{ name: 'Account', path: '/dashboard/account', icon: <FaUserCog /> },
+		{ name: 'Warehouse', path: '/stock', icon: <FaWarehouse /> },
+		{ name: 'Stats', path: '/stats', icon: <FaChartLine /> },
+		{ name: 'Reports', path: '/reports', icon: <IoDocumentTextSharp /> },
+		{ name: 'Account', path: '/account', icon: <FaUserCog /> },
 	]
 	return (
 		<div className='aside-menu '>
@@ -17,9 +17,9 @@ const AsideMenu = () => {
 				{asideMenuButtons.map((btn, index) => {
 					return (
 						<li key={index}>
-								<NavLink to={btn.path} end className={({ isActive }) => (isActive ? 'nav-link active-menu' : '')}>
-									{btn.icon} <span className='span-color'>{btn.name}</span>
-								</NavLink>
+							<NavLink to={btn.path} className={({ isActive }) => (isActive ? 'nav-link active-menu' : '')}>
+								{btn.icon} <span className='span-color'>{btn.name}</span>
+							</NavLink>
 						</li>
 					)
 				})}

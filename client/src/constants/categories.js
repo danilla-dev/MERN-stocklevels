@@ -391,13 +391,7 @@ export const currencies = [
 	'Brazilian Real (BRL)',
 	'Turkish Lira (TRY)',
 ]
-const progressColors = {
-	'0%': '#ff0000', // Czerwony
-	'25%': '#ff6600', // Pomarańczowy
-	'50%': '#ffff00', // Żółty
-	'75%': '#00ff00', // Zielony
-	'100%': '#008000', // Ciemnozielony
-}
+
 export const getStartAndEndOfWeek = () => {
 	const today = dayjs()
 
@@ -413,4 +407,11 @@ export const getStartAndEndOfWeek = () => {
 		currentWeek: { start: startOfCurrentWeek, end: endOfCurrentWeek },
 		previousWeek: { start: startOfPreviousWeek, end: endOfPreviousWeek },
 	}
+}
+
+export const getSubCategories = storeData => {
+	const subCategories = categoriesWithSubcategories.find(
+		category => category.category === storeData.category
+	).subcategories
+	return subCategories
 }
