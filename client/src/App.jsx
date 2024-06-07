@@ -35,20 +35,27 @@ function App() {
 				id='blur'
 				onClick={() => {
 					toggleOpen()
-					navigate('/dashboard/stock')
+					navigate('auth/stock')
 				}}
 			/>
 
 			<Routes>
 				<Route path='/' element={<HomeLayout />}>
-					<Route index element={userLocal ? <Navigate to='dashboard' /> : <Landing />} />
+					<Route index element={userLocal ? <Navigate to='auth/dashboard' /> : <Landing />} />
+
 					<Route
-						path='dashboard'
+						path='auth'
 						element={user ? user && user.complete ? <DashboardLayout /> : <SetStorePage /> : <Navigate to='/login' />}
 					>
-						<Route index element={userLocal ? <MainDashboard /> : <Navigate to='/login' />} />
+						<Route
+							index
+							element={user ? user && user.complete ? <DashboardLayout /> : <SetStorePage /> : <Navigate to='/login' />}
+						/>
+						<Route path='dashboard' element={userLocal ? <MainDashboard /> : <Navigate to='/login' />} />
+
 						{/* ///////////////////// STOCK */}
 						<Route path='stock' element={userLocal ? <StockLayout /> : <Navigate to='/login' />}>
+							<Route index element={userLocal ? <StockLayout /> : <Navigate to='/login' />} />
 							<Route path='product/add' element={userLocal ? <StockLayout /> : <Navigate to='/login' />} />
 							<Route path='product/details/:id' element={userLocal ? <StockLayout /> : <Navigate to='/login' />} />
 							<Route

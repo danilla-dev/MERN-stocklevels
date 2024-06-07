@@ -115,7 +115,7 @@ const Product = () => {
 
 	const handleOpenSellDrawer = e => {
 		setInsideContext(<SaleForm id={id} ean={product.EAN} />)
-		navigate(`/dashboard/stock/product/details/${id}/sell`)
+		navigate(`auth/stock/product/details/${id}/sell`)
 	}
 	const handleDeleteProduct = async e => {
 		const isConfirmed = window.confirm(`Are you sure to delete product with ID:${id}?`)
@@ -126,7 +126,7 @@ const Product = () => {
 	}
 	const handleEditProduct = e => {
 		setInsideContext(<EditProductForm id={id} product={product} />)
-		navigate(`/dashboard/stock/product/details/${id}/edit`)
+		navigate(`auth/stock/product/details/${id}/edit`)
 	}
 	return (
 		<>

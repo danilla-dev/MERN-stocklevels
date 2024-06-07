@@ -5,11 +5,11 @@ import { AiFillDashboard } from 'react-icons/ai'
 import { IoDocumentTextSharp } from 'react-icons/io5'
 const AsideMenu = () => {
 	const asideMenuButtons = [
-		{ name: 'Dashboard', path: '/dashboard', icon: <AiFillDashboard /> },
-		{ name: 'Warehouse', path: '/stock', icon: <FaWarehouse /> },
-		{ name: 'Stats', path: '/stats', icon: <FaChartLine /> },
-		{ name: 'Reports', path: '/reports', icon: <IoDocumentTextSharp /> },
-		{ name: 'Account', path: '/account', icon: <FaUserCog /> },
+		{ name: 'Dashboard', path: '/auth/dashboard', icon: <AiFillDashboard /> },
+		{ name: 'Warehouse', path: '/auth/stock', icon: <FaWarehouse /> },
+		{ name: 'Stats', path: '/auth/stats', icon: <FaChartLine /> },
+		{ name: 'Reports', path: '/auth/reports', icon: <IoDocumentTextSharp /> },
+		{ name: 'Account', path: '/auth/account', icon: <FaUserCog /> },
 	]
 	return (
 		<div className='aside-menu '>
