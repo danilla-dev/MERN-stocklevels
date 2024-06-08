@@ -1,17 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './Table.module.scss'
-import { RiAddBoxFill, RiMoneyDollarBoxFill } from 'react-icons/ri'
-import NewProductForm from '../NewProductForm/NewProductForm'
-import SaleForm from '../SaleForm/SaleForm'
-import { useDrawerContext } from '../../hooks/useDrawerContext'
-
 import { Table as TableAntd } from 'antd'
 
 const Table = ({ data, columns, size, pagination, expandable, buttons }) => {
-	const { toggleOpen, setDrawerSize } = useDrawerContext()
-
-	const navigate = useNavigate()
-
 	const dataTable = data.map((element, index) => {
 		return {
 			...element,
@@ -19,36 +10,8 @@ const Table = ({ data, columns, size, pagination, expandable, buttons }) => {
 		}
 	})
 
-	const togglePopup = (e, size, context) => {
-		e.preventDefault()
-		setDrawerSize(size)
-		toggleOpen(context)
-	}
-
 	return (
 		<div className={`table`}>
-			{buttons && (
-				<div className='buttons-container'>
-					<button
-						className='btn icon-btn '
-						onClick={e => {
-							togglePopup(e, 'sm', <NewProductForm />)
-							navigate('product/add')
-						}}
-					>
-						<RiAddBoxFill />
-					</button>
-					<button
-						className='btn icon-btn '
-						onClick={e => {
-							togglePopup(e, 'sm', <SaleForm />)
-							navigate('product/sell')
-						}}
-					>
-						<RiMoneyDollarBoxFill />
-					</button>
-				</div>
-			)}
 			<TableAntd
 				columns={columns}
 				pagination={pagination ? pagination : false}

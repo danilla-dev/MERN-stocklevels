@@ -38,7 +38,6 @@ function App() {
 					navigate('auth/stock')
 				}}
 			/>
-
 			<Routes>
 				<Route path='/' element={<HomeLayout />}>
 					<Route index element={userLocal ? <Navigate to='auth/dashboard' /> : <Landing />} />
@@ -52,7 +51,6 @@ function App() {
 							element={user ? user && user.complete ? <DashboardLayout /> : <SetStorePage /> : <Navigate to='/login' />}
 						/>
 						<Route path='dashboard' element={userLocal ? <MainDashboard /> : <Navigate to='/login' />} />
-
 						{/* ///////////////////// STOCK */}
 						<Route path='stock' element={userLocal ? <StockLayout /> : <Navigate to='/login' />}>
 							<Route index element={userLocal ? <StockLayout /> : <Navigate to='/login' />} />
@@ -72,8 +70,8 @@ function App() {
 						<Route path='account' element={userLocal ? <AccountLayout /> : <Navigate to='/login' />} />
 					</Route>
 					{/* ///////////////////// AUTH */}
-					<Route path='signup' element={!userLocal ? <RegisterLayout /> : <Navigate to='/dashboard' />} />
-					<Route path='login' element={!userLocal ? <LoginLayout /> : <Navigate to='/dashboard' />} />
+					<Route path='signup' element={!userLocal ? <RegisterLayout /> : <Navigate to='/auth/dashboard' />} />
+					<Route path='login' element={!userLocal ? <LoginLayout /> : <Navigate to='/auth/dashboard' />} />
 				</Route>
 			</Routes>
 		</>

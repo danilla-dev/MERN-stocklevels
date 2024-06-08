@@ -15,6 +15,7 @@ const FormRow = ({
 	list,
 	disable,
 	key,
+	special,
 }) => {
 	////////////////////////////////////////////////////////
 	const handleInputOnchange = e => {
@@ -55,6 +56,19 @@ const FormRow = ({
 			}
 		}
 	}
+	const handleChange = event => {
+		const { type, name } = event.target
+
+		if (type === 'file') {
+			handleFileChange(event)
+		} else {
+			if (typeof special === 'function') {
+				special(event)
+			} else {
+				handleInputOnchange(event)
+			}
+		}
+	}
 	return (
 		<div className={`form-row ${row && 'row-label'}`} key={key && key}>
 			<label htmlFor={name}>{`${labelText || name}:`}</label>
@@ -65,7 +79,7 @@ const FormRow = ({
 				required={required}
 				value={value}
 				onKeyDown={onKeyDown && handleOnEnterDown}
-				onChange={type === 'file' ? handleFileChange : handleInputOnchange}
+				onChange={handleChange}
 				list={list && list}
 				disabled={disable}
 			/>

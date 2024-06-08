@@ -5,18 +5,11 @@ const Schema = mongoose.Schema
 
 const saleSchema = new Schema(
 	{
-		product_id: {
-			type: String,
-			required: true,
-		},
-		EAN: {
-			type: String,
-			required: false,
-		},
-		quantity: {
-			type: Number,
-			required: true,
-		},
+		products: [
+			{
+				type: { type: Schema.Types.ObjectId, ref: 'soldProduct' },
+			},
+		],
 		store: {
 			type: String,
 			required: true,

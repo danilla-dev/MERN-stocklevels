@@ -1,10 +1,13 @@
 import { useEffect, useState, useContext } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import NewProductForm from '../NewProductForm/NewProductForm'
+import SaleForm from '../SaleForm/SaleForm'
 import styles from './ProductsList.module.scss'
 import Table from '../Table/Table'
 import Product from '../Product/Product'
 import { useProductsContext } from '../../hooks/useProductsContext'
 import { Spin } from 'antd'
+import { RiAddBoxFill, RiMoneyDollarBoxFill } from 'react-icons/ri'
 import { DrawerContext } from '../../contexts/DrawerContext'
 import { GoAlertFill } from 'react-icons/go'
 
@@ -12,10 +15,12 @@ const ProductsList = () => {
 	const { products, isLoading } = useProductsContext()
 	const { isOpen, toggleOpen, setDrawerSize } = useContext(DrawerContext)
 
-	const togglePopup = e => {
+	const navigate = useNavigate()
+
+	const togglePopup = (e, size, context) => {
 		e.preventDefault()
-		setDrawerSize('lg')
-		toggleOpen(<Product />)
+		setDrawerSize(size)
+		toggleOpen(context)
 	}
 
 	const columns = [
@@ -31,7 +36,7 @@ const ProductsList = () => {
 			dataIndex: 'name',
 			key: 'name',
 			render: (text, record) => (
-				<span onClick={togglePopup} className='name-product-cell'>
+				<span onClick={e => togglePopup(e, 'lg', <Product />)} className='name-product-cell'>
 					<Link to={`/auth/stock/product/details/${record.product_id}`}>
 						{record.quantity < 5 && <GoAlertFill />}
 						{record.name}{' '}
@@ -67,6 +72,26 @@ const ProductsList = () => {
 				</div>
 			) : (
 				<>
+					<div className='buttons-container'>
+						<button
+							className='btn icon-btn '
+							onClick={e => {
+								togglePopup(e, 'sm', <NewProductForm />)
+								navigate('product/add')
+							}}
+						>
+							<RiAddBoxFill />
+						</button>
+						<button
+							className='btn icon-btn '
+							onClick={e => {
+								togglePopup(e, 'sm', <SaleForm />)
+								navigate('product/sell')
+							}}
+						>
+							<RiMoneyDollarBoxFill />
+						</button>
+					</div>
 					{products.length > 0 ? (
 						<Table columns={columns} data={products} size={'small'} pagination buttons />
 					) : (
