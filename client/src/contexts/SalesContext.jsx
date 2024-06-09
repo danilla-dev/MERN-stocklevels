@@ -134,6 +134,7 @@ export const SalesContextProvider = memo(({ children }) => {
 				currSalesSum,
 				aggregatedSales,
 				aggregatedSalesByHour,
+				aggregatedSalesByProductAndDay,
 			}}
 		>
 			{children}

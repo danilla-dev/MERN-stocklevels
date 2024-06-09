@@ -40,19 +40,18 @@ const CustomLegend = props => {
 
 const styles = {
 	backgroundColor: 'white',
-	padding: '2em',
+	padding: '1em',
 	border: '1px solid black',
 	borderRadius: '10px',
 	fontSize: '1.4rem',
 }
 
-const TinyLineChart = ({ data, dataKey, value }) => {
-	console.log(data)
+const TinyLineChart = ({ data, dataKey, value, legend, X }) => {
 	return (
 		<ResponsiveContainer height='100%' width='100%' minWidth={200} minHeight={200}>
 			<LineChart data={data} style={{ fontSize: '1.2rem' }}>
-				<XAxis dataKey={value} hanging={20} padding={{ left: 30, right: 30 }} />
-				<Legend content={<CustomLegend />} />
+				{X && <XAxis dataKey={value} hanging={20} padding={{ left: 30, right: 30 }} />}
+				{legend && <Legend content={<CustomLegend />} />}
 				<Line type='monotone' dataKey={dataKey} stroke='#7e3ae4' strokeWidth={5} cursor='pointer' dot={false} />
 				<Tooltip content={<CustomTooltip />} wrapperStyle={styles} />
 			</LineChart>

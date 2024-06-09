@@ -340,9 +340,24 @@ table {
 .date-picker.end {
 	grid-area: 2 / 2 / 3 / 3;
 }
-.recharts-wrapper {
-	height: 100%;
+.line-charts-container {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
 	width: 100%;
+}
+.chart-box {
+	height: 100%;
+	border: 1px solid rgba(173, 167, 167, 0.8);
+	border-radius: 5px;
+	background-color: $GlassColor1a;
+	box-shadow: 0px 5px 10px 0px rgba(31, 38, 135, 0.2);
+}
+.chart-box-header {
+	font-size: 2rem;
+	padding: 0.1em;
+	margin: 0.2em;
+	border-bottom: 1px solid rgba(173, 167, 167, 0.8);
 }
 .chart-legend {
 	@include flex-center;
@@ -413,6 +428,11 @@ table {
 		margin: 1em;
 		width: 250px;
 	}
+}
+.pdf-download {
+	display: block;
+	padding: 0.5em;
+	font-size: 1.6rem;
 }
 ///////////////////////         DETAILS / BOX /////////////////////////////////
 

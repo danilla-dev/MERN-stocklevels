@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo, useCallback } from 'react'
 import StoreInfo from '../components/StoreInfo/StoreInfo'
 import Table from '../components/Table/Table'
 import SimpleBarChart from '../components/SimpleBarChart/SimpleBarChart'
+import TinyLineChart from '../components/TinyLineChart/TinyLineChart'
 import Widget from '../components/Widget/Widget'
 import { useSalesContext } from '../hooks/useSalesContext'
 import { useProductsContext } from '../hooks/useProductsContext'
@@ -10,14 +11,14 @@ import { getProducts, getProductsSales, getSales } from '../api/apiFunctions'
 import { getStartAndEndOfWeek } from '../constants/categories'
 import { lowStockColumns, allSoldProductsColumns, allSalesColumns } from '../constants/columns'
 import { Progress, Tooltip } from 'antd'
+import PdfGenerator from '../components/PdfGenerator/PdfGenerator'
 
 const MainDashboard = () => {
-	const { soldProducts, previousSortedSales, prevSalesSum, currSalesSum, sortedSales, sales } = useSalesContext()
+	const { soldProducts, sales, aggregatedSalesByProductAndDay } = useSalesContext()
 	const { products } = useProductsContext()
 	const { user } = useAuthContext()
 	const { dispatch, setIsLoading } = useProductsContext()
 	const { dispatch: salesDispatch } = useSalesContext()
-
 	const { currentWeek, previousWeek } = getStartAndEndOfWeek()
 	// GET all products
 	useEffect(() => {
@@ -50,6 +51,20 @@ const MainDashboard = () => {
 		<>
 			<Widget color='green'>
 				<StoreInfo />
+			</Widget>
+			<Widget small={aggregatedSalesByProductAndDay.length < 3} text='Sales of products dy by day'>
+				<div className='line-charts-container'>
+					{aggregatedSalesByProductAndDay.map((product, index) => {
+						if (product.sales.length > 1) {
+							return (
+								<div className='chart-box form-box' key={index}>
+									<p className='chart-box-header'>ID: {product.product_id}</p>
+									<TinyLineChart data={product.sales} dataKey='quantity' value='date' X={false} />
+								</div>
+							)
+						}
+					})}
+				</div>
 			</Widget>
 			{lowProductsSort.length > 0 ? (
 				<Widget text='Products in low' low_data color='red' small>

@@ -10,6 +10,7 @@ import Table from '../components/Table/Table'
 import { allProductsSalesColumn, allSalesColumns } from '../constants/columns'
 import { useSalesContext } from '../hooks/useSalesContext'
 import { Progress, Tooltip, DatePicker } from 'antd'
+import PdfGenerator from '../components/PdfGenerator/PdfGenerator'
 
 import dayjs from 'dayjs'
 
@@ -25,6 +26,8 @@ const StatsLayout = memo(() => {
 	useEffect(() => {
 		getData()
 	}, [date])
+
+	console.log(sales)
 
 	const getData = async params => {
 		await getProductsSales(dispatch, {
@@ -49,6 +52,7 @@ const StatsLayout = memo(() => {
 	const disabledDate = current => {
 		return current && current > dayjs().endOf('day')
 	}
+
 	return (
 		<>
 			<div className='date-picker-container glass'>
@@ -86,16 +90,17 @@ const StatsLayout = memo(() => {
 			</Widget>
 
 			<Widget text='Sales every days' small>
-				<TinyLineChart data={aggregatedSales} dataKey='sales' value='date' />
+				<TinyLineChart data={aggregatedSales} dataKey='sales' value='date' legend X />
 			</Widget>
 			<Widget text='Sales every 4 hour' small>
-				<TinyLineChart data={aggregatedSalesByHour} dataKey='totalSales' value='interval' />
+				<TinyLineChart data={aggregatedSalesByHour} dataKey='totalSales' value='interval' legend X />
 			</Widget>
 			<Widget text='All products sales' small low_data>
 				<Table data={sortedProducts} columns={allProductsSalesColumn} size='medium' pagination={{ pageSize: 8 }} />
 			</Widget>
 			<Widget text='Last sales' low_data small>
 				<Table data={sales && sales} columns={allSalesColumns} size='small' pagination />
+				<PdfGenerator data={sales} />
 			</Widget>
 			<Widget text='Stores stats' small>
 				<SimplePieChart data={sortedSales} oneBar />
