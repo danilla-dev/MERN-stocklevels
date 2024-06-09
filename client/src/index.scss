@@ -340,6 +340,10 @@ table {
 .date-picker.end {
 	grid-area: 2 / 2 / 3 / 3;
 }
+.recharts-wrapper {
+	height: 100%;
+	width: 100%;
+}
 .chart-legend {
 	@include flex-center;
 	font-size: 2.2rem;

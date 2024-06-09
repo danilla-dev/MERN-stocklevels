@@ -91,12 +91,6 @@ const StatsLayout = memo(() => {
 			<Widget text='Sales every 4 hour' small>
 				<TinyLineChart data={aggregatedSalesByHour} dataKey='totalSales' value='interval' />
 			</Widget>
-			{/* /////////////////////////////////////////////////////////////////////// */}
-			<Widget text='Best products' small>
-				<SimpleBarChart data={aggregatedSales} oneBar values={['product_id', 'sales']} />
-			</Widget>
-
-			{/* /////////////////////////////////////////////////////////////////// */}
 			<Widget text='All products sales' small low_data>
 				<Table data={sortedProducts} columns={allProductsSalesColumn} size='medium' pagination={{ pageSize: 8 }} />
 			</Widget>
