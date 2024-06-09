@@ -49,7 +49,7 @@ const styles = {
 const TinyLineChart = ({ data, dataKey, value }) => {
 	console.log(data)
 	return (
-		<ResponsiveContainer height='100%' width='100%'>
+		<ResponsiveContainer height='100%' width='100%' minWidth={200} minHeight={200}>
 			<LineChart data={data} style={{ fontSize: '1.2rem' }}>
 				<XAxis dataKey={value} hanging={20} padding={{ left: 30, right: 30 }} />
 				<Legend content={<CustomLegend />} />
