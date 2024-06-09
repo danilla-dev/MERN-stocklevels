@@ -59,6 +59,7 @@ option {
 }
 
 button {
+	position: relative;
 	border: transparent;
 	background-color: transparent;
 	&:disabled {
@@ -168,7 +169,7 @@ table {
 	padding: 0.25em 0.5em;
 	border-radius: 5px;
 	border-color: transparent;
-	transition: background-color 0.3s;
+	transition: 0.3s;
 	font-size: 1.8rem;
 	&:hover {
 		background-color: $mainColorBtnHover;
@@ -194,6 +195,8 @@ table {
 	&:hover {
 		background-color: $RedHover;
 		color: #fff;
+		background: rgb(255, 83, 78);
+		background: linear-gradient(13deg, rgba(255, 83, 78, 1) 0%, rgba(226, 41, 35, 1) 32%, rgba(187, 23, 18, 1) 80%);
 	}
 }
 .btn.accept {
@@ -202,7 +205,8 @@ table {
 	font-weight: bold;
 	color: $Green;
 	&:hover {
-		background-color: $GreenHover;
+		background: rgb(35, 179, 35);
+		background: linear-gradient(13deg, rgba(35, 179, 35, 1) 0%, rgba(34, 160, 34, 1) 32%, rgba(19, 134, 19, 1) 80%);
 		color: #fff;
 	}
 	&:disabled {
@@ -227,6 +231,8 @@ table {
 	font-size: 1.6rem;
 	&:hover {
 		background-color: $Purple;
+		background: rgb(88, 28, 179);
+		background: linear-gradient(345deg, rgba(88, 28, 179, 1) 6%, rgba(126, 58, 228, 1) 62%, rgba(131, 68, 223, 1) 93%);
 		color: white;
 	}
 }
