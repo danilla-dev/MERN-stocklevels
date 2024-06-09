@@ -85,11 +85,11 @@ const StatsLayout = memo(() => {
 				<SimpleBarChart data={sortedProducts.slice(0, 5)} oneBar values={['product_id', 'sales']} />
 			</Widget>
 
-			<Widget text='Sales by days' small>
-				<TinyLineChart data={aggregatedSales} dataKey='sales' />
+			<Widget text='Sales every days' small>
+				<TinyLineChart data={aggregatedSales} dataKey='sales' value='date' />
 			</Widget>
-			<Widget text='Sales by hour' small>
-				<TinyLineChart data={aggregatedSalesByHour} dataKey='totalSales' />
+			<Widget text='Sales every 4 hour' small>
+				<TinyLineChart data={aggregatedSalesByHour} dataKey='totalSales' value='interval' />
 			</Widget>
 
 			<Widget text='All products sales' small low_data>

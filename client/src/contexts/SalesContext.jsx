@@ -1,4 +1,12 @@
 import { createContext, useReducer, useState, memo, useMemo } from 'react'
+import {
+	sortSalesByStores,
+	sortSalesByProducts,
+	sumSales,
+	createAggregatedSales,
+	createAggregatedSalesByInterval,
+	aggregateSalesByProductsAndDays,
+} from '../utils/utils'
 
 export const SalesContext = createContext()
 
@@ -48,131 +56,70 @@ export const SalesContextProvider = memo(({ children }) => {
 	})
 	const [isLoading, setIsLoading] = useState(true)
 
-	const sortSalesByStores = useMemo(() => {
-		return sales => {
-			if (sales) {
-				const salesByStores = sales.reduce((acc, sale) => {
-					acc[sale.store] = (acc[sale.store] || 0) + sale.quantity
-					return acc
-				}, {})
-				const sortedSales = Object.entries(salesByStores)
-					.sort(([, store1], [, store2]) => store2 - store1)
-					.map(([name, sales]) => ({ name, sales }))
-				return sortedSales
-			}
-			return null
-		}
-	}, [])
+	const previousSortedSales = useMemo(() => sortSalesByStores(state.previousSoldProducts), [state.previousSoldProducts])
+	// [{key: 'OLX', sales: 380}]
+	const sortedSales = useMemo(() => sortSalesByStores(state.soldProducts), [state.soldProducts])
+	// [{key: 'OLX', sales: 380}]
 
-	const sortSalesByProducts = useMemo(() => {
-		return sales => {
-			if (sales) {
-				const salesByProduct = sales.reduce((acc, sale) => {
-					acc[sale.product_id] = (acc[sale.product_id] || 0) + sale.quantity
-					return acc
-				}, {})
-				const sortedProducts = Object.entries(salesByProduct)
-					.sort(([, sales1], [, sales2]) => sales2 - sales1)
-					.map(([product_id, sales]) => ({ product_id, sales }))
-				return sortedProducts
-			}
-			return null
-		}
-	}, [])
+	const previousSortedProducts = useMemo(
+		() => sortSalesByProducts(state.previousSoldProducts),
+		[state.previousSoldProducts]
+	)
+	// [{ key: '1', sales: 277, product_id: '1' }]
 
-	const sumSales = sales => {
-		let sum = 0
-		if (sales) {
-			sales.forEach(sale => {
-				sum += sale.sales
-			})
-		}
-		return sum
-	}
-
-	const createAggregatedSales = salesData => {
-		const salesObject = {}
-
-		salesData.forEach(sale => {
-			const date = sale.createdAt.split('T')[0]
-			const salesForDate = salesObject[date] || []
-			salesForDate.push(sale)
-			salesObject[date] = salesForDate
-		})
-
-		const aggregatedSales = Object.keys(salesObject).map(date => {
-			const totalSales = salesObject[date].reduce((total, sale) => {
-				const salesForDay = sale.products.reduce((sum, product) => sum + product.quantity, 0)
-				return total + salesForDay
-			}, 0)
-			return { date, sales: totalSales }
-		})
-
-		aggregatedSales.sort((a, b) => new Date(a.date) - new Date(b.date))
-		return aggregatedSales
-	}
-
-	const createAggregatedSalesByInterval = (salesData, interval) => {
-		const salesMap = new Map()
-
-		salesData.forEach(sale => {
-			const saleDate = new Date(sale.createdAt)
-			const hour = saleDate.getHours()
-
-			// Oblicz indeks grupy dla danej godziny na podstawie interwału
-			const groupIndex = Math.floor(hour / interval)
-
-			// Oblicz początek interwału czasowego dla danej godziny
-			const groupStartHour = groupIndex * interval
-
-			// Utwórz klucz w formacie "HH:00-HH:59" dla grupy godzin
-			const hourKey = `${groupStartHour}:00-${groupStartHour + interval - 1}:59`
-
-			// Pobierz lub utwórz tablicę sprzedaży dla danej grupy godzin
-			const salesForInterval = salesMap.get(hourKey) || []
-
-			// Dodaj bieżącą sprzedaż do tablicy sprzedaży dla danej grupy godzin
-			salesForInterval.push(sale)
-
-			// Zaktualizuj dane w mapie
-			salesMap.set(hourKey, salesForInterval)
-		})
-
-		// Przekształć dane z mapy na tablicę wynikową
-		const aggregatedSalesByInterval = []
-		salesMap.forEach((sales, hour) => {
-			// Tutaj możesz obliczyć sumę sprzedaży dla danej grupy godzin, jeśli jest to konieczne
-			const totalSalesForInterval = sales.reduce((total, sale) => {
-				// Dodaj do sumy sprzedaży ilość sprzedanych produktów w danej sprzedaży
-				return total + sale.products.reduce((sum, product) => sum + product.quantity, 0)
-			}, 0)
-
-			// Dodaj dane o sprzedaży do tablicy wynikowej
-			aggregatedSalesByInterval.push({ interval: hour, totalSales: totalSalesForInterval })
-		})
-
-		// Posortuj dane według interwału
-		aggregatedSalesByInterval.sort((a, b) => {
-			// Tutaj możesz dostosować sortowanie według potrzeb
-			return a.interval.localeCompare(b.interval)
-		})
-
-		return aggregatedSalesByInterval
-	}
-	const previousSortedSales = sortSalesByStores(state.previousSoldProducts)
-	const sortedSales = sortSalesByStores(state.soldProducts)
-
-	const previousSortedProducts = sortSalesByProducts(state.previousSoldProducts)
-	const sortedProducts = sortSalesByProducts(state.soldProducts)
+	const sortedProducts = useMemo(() => sortSalesByProducts(state.soldProducts), [state.soldProducts])
+	// [{ key: '1', sales: 277, product_id: '1' }]
 
 	const prevSalesSum = sumSales(previousSortedSales)
+	// 420
+
 	const currSalesSum = sumSales(sortedSales)
+	// 420
 
-	const aggregatedSales = createAggregatedSales(state.sales)
-	const aggregatedSalesByHour = createAggregatedSalesByInterval(state.sales, 1)
-	console.log('aggregatedSales', aggregatedSales)
-	console.log('aggregatedSalesByHour', aggregatedSalesByHour)
+	const aggregatedSales = useMemo(() => createAggregatedSales(state.sales), [state.sales])
+	//{date: '2024-06-08', sales: 265}
 
+	const aggregatedSalesByHour = useMemo(() => createAggregatedSalesByInterval(state.sales, 4), [state.sales])
+	console.log(aggregatedSalesByHour)
+	// [
+	// 	{ interval: '0:00-0:59', totalSales: 198 },
+	// 	{ interval: '1:00-1:59', totalSales: 67 },
+	// 	{ interval: '14:00-14:59', totalSales: 511 },
+	// 	{ interval: '3:00-3:59', totalSales: 1 }
+	// ]
+
+	const aggregatedSalesByProductAndDay = useMemo(
+		() => aggregateSalesByProductsAndDays(state.soldProducts),
+		[state.soldProducts]
+	)
+	// [
+	// 	({
+	// 		product_id: '1',
+	// 		sales: [
+	// 			{
+	// 				date: '2024-06-09',
+	// 				quantity: 156,
+	// 			},
+	// 			{
+	// 				date: '2024-06-10',
+	// 				quantity: 56,
+	// 			},
+	// 		],
+	// 	},
+	// 	{
+	// 		product_id: '2',
+	// 		sales: [
+	// 			{
+	// 				date: '2024-06-09',
+	// 				quantity: 6,
+	// 			},
+	// 			{
+	// 				date: '2024-06-10',
+	// 				quantity: 16,
+	// 			},
+	// 		],
+	// 	})
+	// ]
 	return (
 		<SalesContext.Provider
 			value={{

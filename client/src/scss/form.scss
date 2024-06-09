@@ -37,10 +37,8 @@
 		font-size: 1.4rem;
 	}
 	.checkboxes-container {
-		display: flex;
+		@include flex-center;
 		flex-wrap: wrap;
-		align-items: center;
-		justify-content: center;
 		width: 100%;
 		max-width: 600px;
 	}

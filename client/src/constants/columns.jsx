@@ -76,7 +76,6 @@ export const allProductsSalesColumn = [
 		title: 'Product',
 		dataIndex: 'product_id',
 		key: 'product_id',
-		render: (text, record) => <Link to={`/product/${record.id}`}>{record.product_id}</Link>,
 	},
 	{
 		title: 'Sales',

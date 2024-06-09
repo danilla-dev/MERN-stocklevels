@@ -188,7 +188,6 @@ export const getSalesOfProduct = async (dispatch, id) => {
 		.get(`/sales/product/${id}`)
 		.then(response => {
 			if (response.status === 200) {
-				console.log(response)
 				dispatch({ type: 'SET_PREVIEW_SALE', payload: response.data })
 			}
 		})
@@ -214,7 +213,6 @@ export const getSales = async (dispatch, date) => {
 		.get(`/sales/date?start=${date.start}&end=${date.end}`)
 		.then(response => {
 			if (response.status === 200) {
-				console.log(response)
 				dispatch({ type: 'SET_SALES', payload: response.data })
 			}
 		})
@@ -228,7 +226,6 @@ export const getProductsSales = async (dispatch, date, comparison) => {
 		.get(`/sales/products/date?start=${date.start}&end=${date.end}`)
 		.then(response => {
 			if (response.status === 200 && !comparison) {
-				console.log('RESPONSEDATA', response.data)
 				dispatch({ type: 'SET_SOLD_PRODUCTS', payload: response.data })
 			}
 			if (response.status === 200 && comparison) {

@@ -1,4 +1,5 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid } from 'recharts'
+import { FaChartColumn } from 'react-icons/fa6'
 import dayjs from 'dayjs'
 
 const CustomTooltip = ({ active, payload, label }) => {
@@ -8,7 +9,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 		return (
 			<div className='custom-tooltip'>
-				<p className='label'>{`${label} : ${payload[0].value} sales`}</p>
+				<p className='label'>{`ID: ${label} - ${payload[0].value} sales`}</p>
 				{payloadData.createdAt && <p className='date-time'>{date}</p>}
 				{payloadData.store && <p className='date-time'>{payloadData.store}</p>}
 			</div>
@@ -23,8 +24,24 @@ const styles = {
 	border: '1px solid black',
 	borderRadius: '10px',
 }
-const barGradient = {
-	background: 'linear-gradient(87deg, rgba(51,90,189,1) 6%, rgba(70,108,203,1) 46%, rgba(93,130,224,1) 95%)',
+
+const CustomLegend = props => {
+	const { payload } = props
+
+	return (
+		<ul>
+			{payload.map((entry, index) => {
+				return (
+					<li key={`item-${index}`}>
+						<div className='chart-legend bar'>
+							<FaChartColumn />
+							<p className='chart-legend-text'>sales</p>
+						</div>
+					</li>
+				)
+			})}
+		</ul>
+	)
 }
 
 const SimpleBarChart = ({ data, oneBar, values }) => {
@@ -45,7 +62,7 @@ const SimpleBarChart = ({ data, oneBar, values }) => {
 				<YAxis width={35} dataKey={values[1]} />
 				<Tooltip content={<CustomTooltip />} wrapperStyle={styles} />
 				<CartesianGrid strokeDasharray='3 3' />
-				<Legend wrapperStyle={{ fontSize: '2rem' }} />
+				<Legend content={<CustomLegend />} />
 				<Bar dataKey={values[1]} fill={`url(#${gradientId})`} cursor='pointer' />
 				{!oneBar && <Bar dataKey='store' fill='#95DFB1' />}
 			</BarChart>

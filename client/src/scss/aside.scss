@@ -68,13 +68,8 @@
 		}
 		.nav-link.active-menu:last-child {
 			background-color: $Purple;
-			background: rgb(88, 28, 179);
-			background: linear-gradient(
-				345deg,
-				rgba(88, 28, 179, 1) 6%,
-				rgba(126, 58, 228, 1) 62%,
-				rgba(131, 68, 223, 1) 93%
-			);
+			@include nav-active-gradient(rgba(88, 28, 179, 1), rgba(126, 58, 228, 1), rgba(131, 68, 223, 1));
+			@include box-shadow(rgba(66, 68, 90, 1));
 			svg,
 			span {
 				color: white;
