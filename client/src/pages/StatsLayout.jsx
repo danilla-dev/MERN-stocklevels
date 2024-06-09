@@ -4,6 +4,7 @@ import { getProductsSales, getSales } from '../api/apiFunctions'
 import SimpleBarChart from '../components/SimpleBarChart/SimpleBarChart'
 import FlexContainer from '../components/FlexContainer/FlexContainer'
 import SimplePieChart from '../components/SimplePieChart/SimplePieChart'
+import TinyLineChart from '../components/TinyLineChart/TinyLineChart'
 import Widget from '../components/Widget/Widget'
 import Table from '../components/Table/Table'
 import { allProductsSalesColumn, allSalesColumns } from '../constants/columns'
@@ -18,7 +19,9 @@ const StatsLayout = memo(() => {
 		endDate: dayjs(),
 	})
 
-	const { soldProducts, dispatch, sortedProducts, sortedSales, sales } = useSalesContext()
+	const { soldProducts, dispatch, sortedProducts, sortedSales, sales, aggregatedSales, aggregatedSalesByHour } =
+		useSalesContext()
+
 	useEffect(() => {
 		getData()
 	}, [date])
@@ -75,20 +78,27 @@ const StatsLayout = memo(() => {
 					/>
 				</div>
 			</div>
-			<Widget text='Last sold products' mini>
+			<Widget text='Last sold products' small>
 				<SimpleBarChart data={soldProducts && soldProducts.slice(0, 5)} oneBar values={['product_id', 'quantity']} />
 			</Widget>
-			<Widget text='Best products' mini>
+			<Widget text='Best products' small>
 				<SimpleBarChart data={sortedProducts.slice(0, 5)} oneBar values={['product_id', 'sales']} />
 			</Widget>
 
-			<Widget text='All products sales' mini low_data>
+			<Widget text='Sales by days' small>
+				<TinyLineChart data={aggregatedSales} dataKey='sales' />
+			</Widget>
+			<Widget text='Sales by hour' small>
+				<TinyLineChart data={aggregatedSalesByHour} dataKey='totalSales' />
+			</Widget>
+
+			<Widget text='All products sales' small low_data>
 				<Table data={sortedProducts} columns={allProductsSalesColumn} size='medium' pagination={{ pageSize: 8 }} />
 			</Widget>
-			<Widget text='Last sales' low_data mini>
+			<Widget text='Last sales' low_data small>
 				<Table data={sales && sales} columns={allSalesColumns} size='small' pagination />
 			</Widget>
-			<Widget text='Stores stats' mini>
+			<Widget text='Stores stats' small>
 				<SimplePieChart data={sortedSales} oneBar />
 			</Widget>
 		</>

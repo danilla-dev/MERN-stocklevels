@@ -37,12 +37,29 @@
 		border-top: 5px solid $RedBorder;
 	}
 }
+.widget-container {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	.mini-widget {
+		margin: 0;
+		height: calc(350px - 5em);
+		max-width: calc(20% - 1em);
+		background-color: transparent;
+		border-top: 1px solid silver;
+		box-shadow: none;
+	}
+}
 @media (min-width: 996px) {
 	.widget {
 		margin-top: 2em;
 	}
-	.mini-widget {
+	.small-widget {
 		max-width: calc(50% - 1em);
+		height: 400px;
+	}
+	.mini-widget {
+		max-width: calc(25% - 1em);
 		height: 400px;
 	}
 	.circle-widget {

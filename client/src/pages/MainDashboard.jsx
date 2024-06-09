@@ -42,7 +42,7 @@ const MainDashboard = () => {
 		}
 	}, [dispatch, salesDispatch])
 
-	const productsSort = useMemo(() => {
+	const lowProductsSort = useMemo(() => {
 		return products.sort((a, b) => a.quantity - b.quantity).filter(product => product.quantity < 5)
 	}, [products])
 
@@ -51,13 +51,18 @@ const MainDashboard = () => {
 			<Widget color='green'>
 				<StoreInfo />
 			</Widget>
+			{lowProductsSort.length > 0 ? (
+				<Widget text='Products in low' low_data color='red' small>
+					<Table data={lowProductsSort} columns={lowStockColumns} size='small' pagination />
+				</Widget>
+			) : null}
 
-			<Widget text='Products in low' low_data color='red' mini>
-				<Table data={productsSort} columns={lowStockColumns} size='small' pagination />
+			<Widget text='Last sales' low_data small>
+				<Table data={sales && sales} columns={allSalesColumns} size='small' pagination />
 			</Widget>
 
-			<Widget text='Last sales' low_data mini>
-				<Table data={sales && sales} columns={allSalesColumns} size='small' pagination />
+			<Widget text='Last sold products' small>
+				<SimpleBarChart data={soldProducts && soldProducts.slice(0, 5)} oneBar values={['product_id', 'quantity']} />
 			</Widget>
 
 			<Widget text='Sales comparison - Last and this week'>
@@ -90,14 +95,10 @@ const MainDashboard = () => {
 						})}
 				</div>
 			</Widget>
-
-			<Widget text='Last sold products' mini>
-				<SimpleBarChart data={soldProducts && soldProducts.slice(0, 5)} oneBar values={['product_id', 'quantity']} />
-			</Widget>
-
-			<Widget text='Week sales history' mini>
+			<Widget text='Week sales history' small>
 				<Table data={soldProducts} columns={allSoldProductsColumns} size='medium' pagination={{ pageSize: 8 }} />
 			</Widget>
+
 			{/* // </FlexContainer> */}
 		</>
 	)

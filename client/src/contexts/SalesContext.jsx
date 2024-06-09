@@ -90,6 +90,75 @@ export const SalesContextProvider = memo(({ children }) => {
 		return sum
 	}
 
+	const createAggregatedSales = salesData => {
+		const salesObject = {}
+
+		salesData.forEach(sale => {
+			const date = sale.createdAt.split('T')[0]
+			const salesForDate = salesObject[date] || []
+			salesForDate.push(sale)
+			salesObject[date] = salesForDate
+		})
+
+		const aggregatedSales = Object.keys(salesObject).map(date => {
+			const totalSales = salesObject[date].reduce((total, sale) => {
+				const salesForDay = sale.products.reduce((sum, product) => sum + product.quantity, 0)
+				return total + salesForDay
+			}, 0)
+			return { date, sales: totalSales }
+		})
+
+		aggregatedSales.sort((a, b) => new Date(a.date) - new Date(b.date))
+		return aggregatedSales
+	}
+
+	const createAggregatedSalesByInterval = (salesData, interval) => {
+		const salesMap = new Map()
+
+		salesData.forEach(sale => {
+			const saleDate = new Date(sale.createdAt)
+			const hour = saleDate.getHours()
+
+			// Oblicz indeks grupy dla danej godziny na podstawie interwału
+			const groupIndex = Math.floor(hour / interval)
+
+			// Oblicz początek interwału czasowego dla danej godziny
+			const groupStartHour = groupIndex * interval
+
+			// Utwórz klucz w formacie "HH:00-HH:59" dla grupy godzin
+			const hourKey = `${groupStartHour}:00-${groupStartHour + interval - 1}:59`
+
+			// Pobierz lub utwórz tablicę sprzedaży dla danej grupy godzin
+			const salesForInterval = salesMap.get(hourKey) || []
+
+			// Dodaj bieżącą sprzedaż do tablicy sprzedaży dla danej grupy godzin
+			salesForInterval.push(sale)
+
+			// Zaktualizuj dane w mapie
+			salesMap.set(hourKey, salesForInterval)
+		})
+
+		// Przekształć dane z mapy na tablicę wynikową
+		const aggregatedSalesByInterval = []
+		salesMap.forEach((sales, hour) => {
+			// Tutaj możesz obliczyć sumę sprzedaży dla danej grupy godzin, jeśli jest to konieczne
+			const totalSalesForInterval = sales.reduce((total, sale) => {
+				// Dodaj do sumy sprzedaży ilość sprzedanych produktów w danej sprzedaży
+				return total + sale.products.reduce((sum, product) => sum + product.quantity, 0)
+			}, 0)
+
+			// Dodaj dane o sprzedaży do tablicy wynikowej
+			aggregatedSalesByInterval.push({ interval: hour, totalSales: totalSalesForInterval })
+		})
+
+		// Posortuj dane według interwału
+		aggregatedSalesByInterval.sort((a, b) => {
+			// Tutaj możesz dostosować sortowanie według potrzeb
+			return a.interval.localeCompare(b.interval)
+		})
+
+		return aggregatedSalesByInterval
+	}
 	const previousSortedSales = sortSalesByStores(state.previousSoldProducts)
 	const sortedSales = sortSalesByStores(state.soldProducts)
 
@@ -98,6 +167,11 @@ export const SalesContextProvider = memo(({ children }) => {
 
 	const prevSalesSum = sumSales(previousSortedSales)
 	const currSalesSum = sumSales(sortedSales)
+
+	const aggregatedSales = createAggregatedSales(state.sales)
+	const aggregatedSalesByHour = createAggregatedSalesByInterval(state.sales, 1)
+	console.log('aggregatedSales', aggregatedSales)
+	console.log('aggregatedSalesByHour', aggregatedSalesByHour)
 
 	return (
 		<SalesContext.Provider
@@ -111,6 +185,8 @@ export const SalesContextProvider = memo(({ children }) => {
 				previousSortedSales,
 				prevSalesSum,
 				currSalesSum,
+				aggregatedSales,
+				aggregatedSalesByHour,
 			}}
 		>
 			{children}
