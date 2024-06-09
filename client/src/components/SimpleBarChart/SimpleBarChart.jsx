@@ -9,7 +9,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 		return (
 			<div className='custom-tooltip'>
-				<p className='label'>{`ID: ${label} - ${payload[0].value} sales`}</p>
+				<p className='label'>{`ID: ${label} - ${payload[0].value} pcs.`}</p>
 				{payloadData.createdAt && <p className='date-time'>{date}</p>}
 				{payloadData.store && <p className='date-time'>{payloadData.store}</p>}
 			</div>

@@ -34,7 +34,6 @@ export const createStore = async (req, res) => {
 
 		res.status(200).json({ storeData, complete })
 	} catch (error) {
-		console.log(error)
 		res.status(400).json({ error: error.message })
 	}
 }

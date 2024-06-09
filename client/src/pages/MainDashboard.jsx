@@ -65,7 +65,7 @@ const MainDashboard = () => {
 				<SimpleBarChart data={soldProducts && soldProducts.slice(0, 5)} oneBar values={['product_id', 'quantity']} />
 			</Widget>
 
-			<Widget text='Sales comparison - Last and this week'>
+			{/* <Widget text='Sales comparison - Last and this week'>
 				<div className='container'>
 					<Tooltip title='Green - this week, blue - last week'>
 						<Progress
@@ -94,7 +94,7 @@ const MainDashboard = () => {
 							)
 						})}
 				</div>
-			</Widget>
+			</Widget> */}
 			<Widget text='Week sales history' small>
 				<Table data={soldProducts} columns={allSoldProductsColumns} size='medium' pagination={{ pageSize: 8 }} />
 			</Widget>

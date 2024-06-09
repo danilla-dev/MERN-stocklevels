@@ -6,7 +6,7 @@ import {
 	createAggregatedSales,
 	createAggregatedSalesByInterval,
 	aggregateSalesByProductsAndDays,
-} from '../utils/utils'
+} from '../utils/sales'
 
 export const SalesContext = createContext()
 

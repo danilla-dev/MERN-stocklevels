@@ -27,7 +27,6 @@ export const getSales = async (req, res) => {
 			.populate('products')
 			.sort({ createdAt: -1 })
 			.exec()
-		console.log(salesByDate)
 		res.status(200).json({ sales: salesByDate })
 	} catch (error) {
 		res.status(400).json({ error: error.message })
@@ -81,7 +80,6 @@ export const getSalesOfProducts = async (req, res) => {
 		}).sort({
 			createdAt: -1,
 		})
-		console.log('Sales of product!!!', salesByDate)
 		res.status(200).json({ soldProducts: salesByDate })
 	} catch (error) {
 		res.status(400).json({ error: error.message })
@@ -125,8 +123,6 @@ export const postSale = async (req, res) => {
 
 			////////////// check exist
 			if (!product) {
-				console.log('Co ty chcesz sprzedac niby? xD')
-
 				return res.status(404).json({ message: `Product not found. [ ID: ${product_id} ]` })
 			}
 
@@ -134,7 +130,6 @@ export const postSale = async (req, res) => {
 			const productQuantity = product.quantity
 
 			if (quantity > productQuantity) {
-				console.log('nie masz tyle debiilu')
 				return res.status(400).json({ message: `Not enough products in store. [ ID: ${product_id} ]` })
 			}
 
@@ -177,7 +172,6 @@ export const postSale = async (req, res) => {
 
 		return res.status(200).json({ soldProduct: previewProduct, soldProducts: allProducts })
 	} catch (error) {
-		console.log(error)
 		return res.status(400).json({ error: error.message })
 	}
 }

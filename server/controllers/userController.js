@@ -33,7 +33,6 @@ export const loginUser = async (req, res) => {
 		// create a user object
 		const user = await User.login(email, password)
 		const complete = user.complete
-		console.log(complete)
 
 		// Create a JWT
 		const token = createToken(user._id)
