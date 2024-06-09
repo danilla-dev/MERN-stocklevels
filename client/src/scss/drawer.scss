@@ -7,13 +7,12 @@
 	right: 0;
 	height: calc(100% - 70px);
 	width: 100%;
-	max-width: 400px;
+	max-width: 600px;
 	border-left: 2px solid rgba(93, 28, 204, 0.6);
 	z-index: 101;
 	transition: transform 0.3s;
 	overflow-y: scroll;
 	box-shadow: -7px 0px 45px 5px rgba(46, 47, 59, 1);
-
 	.form {
 		.form-row,
 		.form-select {
@@ -25,17 +24,17 @@
 	background: $GlassColor1a;
 }
 .drawer.lg {
-	max-width: 800px;
+	max-width: 1000px;
 }
 .drawer.inside {
 	z-index: 105;
 	border-left: 2px solid rgba(35, 189, 84, 0.6);
 }
 .drawer-close {
-	transform: translateX(550px);
+	transform: translateX(650px);
 }
 .drawer-close.lg {
-	transform: translateX(850px);
+	transform: translateX(1050px);
 }
 @media (min-width: 996px) {
 	.drawer {

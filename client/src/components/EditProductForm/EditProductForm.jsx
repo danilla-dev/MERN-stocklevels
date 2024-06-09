@@ -17,7 +17,6 @@ const EditProductForm = ({ id, product }) => {
 		category,
 		quantity,
 	})
-	console.log(product)
 	const [detailsObject, setDetailsObject] = useState(details[0])
 
 	const { storeData } = useStoreContext()

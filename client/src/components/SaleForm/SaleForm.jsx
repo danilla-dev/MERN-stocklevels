@@ -18,13 +18,13 @@ const SaleForm = ({ id, ean }) => {
 			quantity: 1,
 		},
 	])
+
 	const [store, setStore] = useState({
 		store: '',
 	})
 	const [errorMessage, setErrorMessage] = useState('')
 	const [productData, setProductData] = useState({ id, ean })
 	const [disabledButton, setDisabledButton] = useState(true)
-
 	///////////// CONTEXTS ////////////////////
 	const { storeData } = useStoreContext()
 	const { products, dispatch } = useProductsContext()
@@ -42,10 +42,17 @@ const SaleForm = ({ id, ean }) => {
 	// 	}))
 	// }
 
-	const handleSaleProduct = async e => {
+	const handleSellProduct = async e => {
 		e.preventDefault()
 		formData.unshift(store)
-		await postSale(dispatch, salesDispatch, formData, setAlertData, setErrorMessage)
+		const resetData = [
+			{
+				product_id: id || '',
+				EAN: ean || '',
+				quantity: 1,
+			},
+		]
+		await postSale(dispatch, salesDispatch, formData, setAlertData, setErrorMessage, setFormData, resetData)
 		await getSalesOfProduct(salesDispatch, id)
 	}
 
@@ -87,8 +94,13 @@ const SaleForm = ({ id, ean }) => {
 		}
 	}
 	return (
-		<form onSubmit={handleSaleProduct} className={`${styles.sale_form} form form-drawer`}>
+		<form onSubmit={handleSellProduct} className={`${styles.sale_form} form form-drawer`}>
 			<h2 className='header'>{`Sell products`} </h2>
+			{errorMessage && (
+				<div className='form-error sm'>
+					<span>{errorMessage}</span>
+				</div>
+			)}
 			<FormSelect
 				name='store'
 				type='text'
@@ -130,7 +142,7 @@ const SaleForm = ({ id, ean }) => {
 							labelText='Product id*'
 							setFormData={setFormData}
 							list={'products_id-suggestions'}
-							value={productData.id & (index === 0) ? productData.id : product.product_id}
+							value={product.product_id}
 							row
 							disable={index === 0 && productData.id}
 							special={e => handleInputOnChange(index, e)}
@@ -140,7 +152,7 @@ const SaleForm = ({ id, ean }) => {
 							type='number'
 							labelText='EAN'
 							setFormData={setFormData}
-							value={productData.ean & (index === 0) ? productData.ean : product.EAN}
+							value={product.EAN}
 							row
 							disable={index === 0 && productData.ean}
 							special={e => handleInputOnChange(index, e)}
@@ -168,11 +180,7 @@ const SaleForm = ({ id, ean }) => {
 					return <option value={product.product_id}>{product.product_id}</option>
 				})}
 			</datalist>
-			{errorMessage && (
-				<div className='form-error sm'>
-					<span>{errorMessage}</span>
-				</div>
-			)}
+
 			<button className='btn submit-btn' onClick={addProduct}>
 				Add product
 			</button>

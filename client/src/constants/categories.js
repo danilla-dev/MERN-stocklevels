@@ -394,14 +394,21 @@ export const currencies = [
 
 export const getStartAndEndOfWeek = () => {
 	const today = dayjs()
-
 	const currentDayOfWeek = today.day()
 
-	const startOfCurrentWeek = today.subtract(currentDayOfWeek - 1, 'day').startOf('day')
-	const endOfCurrentWeek = startOfCurrentWeek.add(6, 'day').endOf('day') //
+	let startOfCurrentWeek, endOfCurrentWeek
 
-	const startOfPreviousWeek = startOfCurrentWeek.subtract(7, 'day').startOf('day')
-	const endOfPreviousWeek = endOfCurrentWeek.subtract(7, 'day').endOf('day') //
+	if (currentDayOfWeek === 0) {
+		// Jeśli dzisiaj jest niedziela, przenieś się o siedem dni wstecz
+		startOfCurrentWeek = today.subtract(6, 'day').startOf('day')
+	} else {
+		startOfCurrentWeek = today.startOf('isoWeek')
+	}
+
+	endOfCurrentWeek = startOfCurrentWeek.add(6, 'day').endOf('day')
+
+	const startOfPreviousWeek = startOfCurrentWeek.subtract(7, 'day')
+	const endOfPreviousWeek = endOfCurrentWeek.subtract(7, 'day').endOf('day')
 
 	return {
 		currentWeek: { start: startOfCurrentWeek, end: endOfCurrentWeek },

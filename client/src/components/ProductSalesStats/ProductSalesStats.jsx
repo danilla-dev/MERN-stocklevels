@@ -38,7 +38,6 @@ const ProductSalesStats = ({ sale }) => {
 		})
 		setSalesArray(storesWithSalesArray)
 	}
-	console.log(salesArray)
 	return (
 		<div className='details-box'>
 			<h2 className='details-header'>Stats: </h2>

@@ -6,7 +6,6 @@ export const getProducts = async (dispatch, setIsLoading) => {
 		.get('/products')
 		.then(response => {
 			if (response.status === 200) {
-				console.log(response)
 				dispatch({ type: 'SET_PRODUCTS', payload: response.data })
 				setIsLoading(false)
 			}
@@ -152,56 +151,88 @@ export const postStore = async (dispatch, userDispatch, data, setFormData) => {
 			console.error('Błąd podczas tworzenia produktu:', error)
 		})
 }
-/////////////////////// SALES //////////////////////////////////
 
-export const postSale = async (dispatch, salesDispatch, data, setAlertData, setErrorMessage) => {
-	console.log(data)
+/////////////////////// SALES //////////////////////////////////
+export const postSale = async (
+	dispatch,
+	salesDispatch,
+	data,
+	setAlertData,
+	setErrorMessage,
+	setFormData,
+	resetData
+) => {
 	await axios
 		.post('/sales', data)
 		.then(response => {
 			if (response.status === 200) {
-				console.log(response.data.product)
-				console.log(response.data.products)
-				dispatch({ type: 'SET_PRODUCTS', payload: response.data.products })
-				dispatch({ type: 'PREVIEW_PRODUCT', payload: response.data.product })
+				dispatch({ type: 'SET_PRODUCTS', payload: response.data.soldProducts })
+				dispatch({ type: 'PREVIEW_PRODUCT', payload: response.data.soldProduct })
 				setAlertData({
 					type: 'success',
 					text: 'The product has been sold!',
 					open: true,
 				})
-			}
-			if (response.status === 400) {
-				console.log(response)
+				setFormData(resetData)
+				setErrorMessage('')
 			}
 		})
 		.catch(error => {
 			console.error('Błąd podczas tworzenia produktu:', error)
+			setFormData(data.slice(1))
 			setErrorMessage(error.response.data.message)
 		})
 }
 export const getSalesOfProduct = async (dispatch, id) => {
 	await axios
-		.get(`/sales/${id}`)
+		.get(`/sales/product/${id}`)
 		.then(response => {
 			if (response.status === 200) {
-				dispatch({ type: 'PREVIEW_SALE', payload: response.data })
+				console.log(response)
+				dispatch({ type: 'SET_PREVIEW_SALE', payload: response.data })
 			}
 		})
 		.catch(error => {
 			console.error('Błąd podczas pobierania danych:', error)
 		})
 }
-export const getSales = async (dispatch, date, comparison) => {
+export const getSaleByID = async (dispatch, id) => {
 	await axios
-		.get(`/sales/date?start=${date.start}&end=${date.end}`)
+		.get(`/sales/${id}`)
 		.then(response => {
-			console.log(response)
 			if (response.status === 200 && !comparison) {
 				dispatch({ type: 'SET_SALES', payload: response.data })
 			}
+		})
+		.catch(error => {
+			console.error('Błąd podczas pobierania danych:', error)
+		})
+}
+
+export const getSales = async (dispatch, date) => {
+	await axios
+		.get(`/sales/date?start=${date.start}&end=${date.end}`)
+		.then(response => {
+			if (response.status === 200) {
+				console.log(response)
+				dispatch({ type: 'SET_SALES', payload: response.data })
+			}
+		})
+		.catch(error => {
+			console.error('Błąd podczas pobierania danych:', error)
+		})
+}
+
+export const getProductsSales = async (dispatch, date, comparison) => {
+	await axios
+		.get(`/sales/products/date?start=${date.start}&end=${date.end}`)
+		.then(response => {
+			if (response.status === 200 && !comparison) {
+				console.log('RESPONSEDATA', response.data)
+				dispatch({ type: 'SET_SOLD_PRODUCTS', payload: response.data })
+			}
 			if (response.status === 200 && comparison) {
-				console.log(response.data)
-				dispatch({ type: 'PREVIOUS_SALES', payload: response.data })
+				dispatch({ type: 'PREVIOUS_SOLD_PRODUCTS', payload: response.data })
 			}
 		})
 		.catch(error => {

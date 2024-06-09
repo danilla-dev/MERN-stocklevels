@@ -100,7 +100,7 @@ const columnsSales = [
 const Product = () => {
 	const { product, dispatch, products } = useProductsContext()
 	const { toggleOpen, setDrawerSize, setInsideContext } = useDrawerContext()
-	const { dispatch: salesDispatch, sale } = useSalesContext()
+	const { dispatch: salesDispatch, soldProduct } = useSalesContext()
 	const { setAlertData } = useContext(AlertContext)
 
 	const { id } = useParams()
@@ -163,11 +163,11 @@ const Product = () => {
 					</div>
 
 					<div className='details-box'>
-						<h2 className='details-header'>Sales: {sale.length}</h2>
-						<Table data={sale || []} columns={columnsSales} pagination={{ pageSize: 5 }} expandable={false} />
+						<h2 className='details-header'>Sales: {soldProduct.length}</h2>
+						<Table data={soldProduct || []} columns={columnsSales} pagination={{ pageSize: 5 }} expandable={false} />
 					</div>
 
-					<ProductSalesStats product={product} sale={sale} />
+					<ProductSalesStats product={product} sale={soldProduct} />
 				</div>
 			)}
 		</>

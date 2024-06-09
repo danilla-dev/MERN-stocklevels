@@ -17,9 +17,7 @@ import {
 import { useAuthContext } from './hooks/useAuthContext'
 import { useProductsContext } from './hooks/useProductsContext'
 import { useDrawerContext } from './hooks/useDrawerContext'
-import { getProducts, getSales } from './api/apiFunctions'
 import { useSalesContext } from './hooks/useSalesContext'
-import dayjs from 'dayjs'
 
 function App() {
 	const { user } = useAuthContext()

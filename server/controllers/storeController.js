@@ -19,7 +19,6 @@ export const createStore = async (req, res) => {
 
 	const formattedImage = await sharp(req.file.buffer).resize(500, 500).toFormat('webp').toBuffer()
 	const imageURL = `data:image/webp;base64,${formattedImage.toString('base64')}`
-	console.log('stores BACK', stores)
 	try {
 		const storeData = await Store.create({
 			user_id,

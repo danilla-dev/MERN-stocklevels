@@ -17,22 +17,6 @@ const Table = ({ data, columns, size, pagination, expandable, buttons }) => {
 				pagination={pagination ? pagination : false}
 				size={size}
 				bordered={false}
-				expandable={
-					expandable && {
-						expandedRowRender: record =>
-							record.details.map(detail => {
-								return (
-									<span className='table-description'>
-										{Object.entries(detail).map(([key, value]) => (
-											<p key={key}>
-												{key}: <span className='span-color'>{value}</span>
-											</p>
-										))}
-									</span>
-								)
-							}),
-					}
-				}
 				dataSource={dataTable}
 			/>
 		</div>

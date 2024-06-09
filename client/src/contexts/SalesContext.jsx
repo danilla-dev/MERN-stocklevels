@@ -7,28 +7,42 @@ export const SalesReducer = (state, action) => {
 	switch (type) {
 		case 'SET_SALES':
 			return {
+				...state,
 				sales: [...payload.sales],
-				sale: state.sale,
-				previousSales: state.previousSales,
 			}
-		case 'PREVIEW_SALE':
+		case 'SET_PREVIOUS_SALES':
 			return {
-				sales: state.sales,
-				sale: payload.sale,
-				previousSales: state.previousSales,
+				...state,
+				sale: [...payload.sale],
 			}
-		case 'PREVIOUS_SALES':
+		//////////////////////////////////
+		case 'SET_SOLD_PRODUCTS':
 			return {
-				sales: state.sales,
-				sale: state.sale,
-				previousSales: [...payload.sales],
+				...state,
+				soldProducts: [...payload.soldProducts],
 			}
+		case 'PREVIOUS_SOLD_PRODUCTS':
+			return {
+				...state,
+				previousSoldProducts: [...payload.soldProducts],
+			}
+
+		//////////////////////////////////
+		case 'SET_PREVIEW_SALE':
+			return {
+				...state,
+				soldProduct: [...payload.sale],
+			}
+
 		default:
 			return state
 	}
 }
 export const SalesContextProvider = memo(({ children }) => {
 	const [state, dispatch] = useReducer(SalesReducer, {
+		soldProducts: [],
+		soldProduct: [],
+		previousSoldProducts: [],
 		sales: [],
 		sale: [],
 	})
@@ -75,11 +89,12 @@ export const SalesContextProvider = memo(({ children }) => {
 		}
 		return sum
 	}
-	const previousSortedSales = sortSalesByStores(state.previousSales)
-	const sortedSales = sortSalesByStores(state.sales)
 
-	const previousSortedProducts = sortSalesByProducts(state.previousSales)
-	const sortedProducts = sortSalesByProducts(state.sales)
+	const previousSortedSales = sortSalesByStores(state.previousSoldProducts)
+	const sortedSales = sortSalesByStores(state.soldProducts)
+
+	const previousSortedProducts = sortSalesByProducts(state.previousSoldProducts)
+	const sortedProducts = sortSalesByProducts(state.soldProducts)
 
 	const prevSalesSum = sumSales(previousSortedSales)
 	const currSalesSum = sumSales(sortedSales)
