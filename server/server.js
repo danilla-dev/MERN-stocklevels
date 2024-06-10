@@ -1,6 +1,5 @@
 import dotenv from 'dotenv'
 dotenv.config()
-console.log(dotenv.config())
 import express from 'express'
 import mongoose from 'mongoose'
 import userRoutes from './routes/user.js'
@@ -29,7 +28,6 @@ app.use('/api/products', upload.single('image'), productsRoutes)
 app.use('/api/store', upload.single('image'), storeRoutes)
 
 if (process.env.NODE_ENV === 'production') {
-	console.log(__dirname)
 	app.use(express.static(path.join(__dirname, '/client/dist')))
 	app.get('*', (req, res) => {
 		res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))

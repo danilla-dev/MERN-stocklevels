@@ -106,23 +106,33 @@ export const postSale = async (req, res) => {
 	const saleDataArray = [...req.body]
 	const store = saleDataArray.shift().store
 
+	const session = await mongoose.startSession()
+	session.startTransaction()
+
 	try {
 		let soldProductsIDS = []
 
-		const saleData = await Sale.create({
-			products: soldProductsIDS,
-			store,
-			user_id,
-		})
-		const saleID = saleData._id
+		const saleData = await Sale.create(
+			[
+				{
+					products: soldProductsIDS,
+					store,
+					user_id,
+				},
+			],
+			{ session }
+		)
+		const saleID = saleData[0]._id
 
 		for (const element of saleDataArray) {
 			const { EAN, product_id, quantity } = element
 
-			let product = await Product.findOne({ user_id, product_id })
+			let product = await Product.findOne({ user_id, product_id }).session(session)
 
 			////////////// check exist
 			if (!product) {
+				await session.abortTransaction()
+				session.endSession()
 				return res.status(404).json({ message: `Product not found. [ ID: ${product_id} ]` })
 			}
 
@@ -130,17 +140,24 @@ export const postSale = async (req, res) => {
 			const productQuantity = product.quantity
 
 			if (quantity > productQuantity) {
+				await session.abortTransaction()
+				session.endSession()
 				return res.status(400).json({ message: `Not enough products in store. [ ID: ${product_id} ]` })
 			}
 
 			////////////// create sold doc DZIAłA
-			const sold = await SoldProduct.create({
-				product_id,
-				EAN,
-				quantity,
-				store,
-				user_id: new mongoose.Types.ObjectId(user_id),
-			})
+			const sold = await SoldProduct.create(
+				[
+					{
+						product_id,
+						EAN,
+						quantity,
+						store,
+						user_id: new mongoose.Types.ObjectId(user_id),
+					},
+				],
+				{ session }
+			)
 			soldProductsIDS.push(sold._id)
 			/// update product quantity DZIAłA
 			await Product.updateOne(
@@ -148,7 +165,8 @@ export const postSale = async (req, res) => {
 				{
 					$inc: { quantity: -quantity },
 					$push: { sales: saleID },
-				}
+				},
+				{ session }
 			)
 		}
 
@@ -158,8 +176,13 @@ export const postSale = async (req, res) => {
 			{
 				$set: { products: soldProductsIDS },
 			},
-			{ new: true }
+			{ new: true, session }
 		)
+
+		// commit the transaction
+		await session.commitTransaction()
+		session.endSession()
+
 		// get updated previewProduct
 		const previewProduct = await Product.findOne({
 			user_id,
@@ -172,6 +195,9 @@ export const postSale = async (req, res) => {
 
 		return res.status(200).json({ soldProduct: previewProduct, soldProducts: allProducts })
 	} catch (error) {
+		// Abort the transaction in case of error
+		await session.abortTransaction()
+		session.endSession()
 		return res.status(400).json({ error: error.message })
 	}
 }
