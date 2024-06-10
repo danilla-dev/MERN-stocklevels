@@ -15,17 +15,37 @@ const SimplePieChart = ({ data }) => {
 	]
 	const renderLegend = props => {
 		const { payload } = props
-
+		console.log(payload)
 		return (
 			<ul className='legend-list'>
 				{payload.map((entry, index) => (
 					<li key={`item-${index}`} className='legend-item'>
 						<span className='legend-square' style={{ backgroundColor: colors[index] }} />
-						{entry.value}
+						{entry.payload.key}
 					</li>
 				))}
 			</ul>
 		)
+	}
+
+	const CustomTooltip = ({ active, payload, label }) => {
+		if (active && payload && payload.length) {
+			const payloadData = payload[0].payload
+			return (
+				<div className='custom-tooltip'>
+					<p className='label'>{payloadData.key}</p>
+				</div>
+			)
+		}
+
+		return null
+	}
+	const styles = {
+		backgroundColor: 'white',
+		padding: '1em',
+		border: '1px solid black',
+		fontSize: '1.6rem',
+		borderRadius: '10px',
 	}
 
 	return (
@@ -43,8 +63,8 @@ const SimplePieChart = ({ data }) => {
 						<Cell key={`cell-${index}`} fill={colors[index]} />
 					))}
 				</Pie>
-				<Legend wrapperStyle={{ fontSize: '1.4rem' }} content={renderLegend} />
-				<Tooltip itemStyle={{ fontSize: '1.4rem' }} active />
+				<Legend content={renderLegend} />
+				<Tooltip wrapperStyle={styles} active content={CustomTooltip} />
 			</PieChart>
 		</ResponsiveContainer>
 	)

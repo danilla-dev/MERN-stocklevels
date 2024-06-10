@@ -27,6 +27,7 @@ const StatsLayout = memo(() => {
 		getData()
 	}, [date])
 
+	console.log(sortedSales)
 	const getData = async params => {
 		await getProductsSales(dispatch, {
 			start: date.startDate.format('YYYY-MM-DD'),

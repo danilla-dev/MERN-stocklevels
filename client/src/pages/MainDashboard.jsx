@@ -59,7 +59,7 @@ const MainDashboard = () => {
 			</Widget>
 			<Widget small={aggregatedSalesByProductAndDay.length < 3} text='Sales of products day by day'>
 				<div className='line-charts-container'>
-					{aggregatedSalesByProductAndDay.map((product, index) => {
+					{aggregatedSalesByProductAndDay.slice(0, 4 ).map((product, index) => {
 						if (product.sales.length > 1) {
 							return (
 								<div className='chart-box form-box' key={index}>
