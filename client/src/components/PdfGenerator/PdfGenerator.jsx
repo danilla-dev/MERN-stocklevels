@@ -1,42 +1,41 @@
 // PdfGenerator.js
-import React from "react";
-import { G, PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
-import SalesTemplate from "../../templates/SalesTemplate";
-import { useStoreContext } from "../../hooks/useStoreContext";
+import React from 'react'
+import { G, PDFDownloadLink, PDFViewer } from '@react-pdf/renderer'
+import SalesTemplate from '../../templates/SalesTemplate'
+import { useStoreContext } from '../../hooks/useStoreContext'
+import { formatDateString } from '../../utils/date'
 
 const PdfGenerator = ({ data }) => {
-  const { storeData } = useStoreContext();
-  console.log(storeData.name);
-  const startDate = data[0].products[0].createdAt.split("T")[0];
-  const endDate = data[data.length - 1].products[0].createdAt.split("T")[0];
+	const { storeData } = useStoreContext()
 
-  const dataToDocument = {
-    sales: data,
-    date: {
-      startDate,
-      endDate,
-    },
-    storeData,
-  };
+	if (data.length !== 0) {
+		const endDate = data[0].products[0].createdAt.split('T')[0]
+		const startDate = data[data.length - 1].products[0].createdAt.split('T')[0]
 
-  return (
-    <PDFDownloadLink document={<SalesTemplate data={dataToDocument} />}>
-      {({ blob, url, loading, error }) => {
-        if (loading) {
-          return <p>Loading document...</p>;
-        }
-        return (
-          <a
-            href={url}
-            download={`sales_raport_${startDate}--${endDate}.pdf`}
-            className="pdf-download"
-          >
-            Download a PDF report
-          </a>
-        );
-      }}
-    </PDFDownloadLink>
-  );
-};
+		const dataToDocument = {
+			sales: data,
+			date: {
+				startDate,
+				endDate,
+			},
+			storeData,
+		}
 
-export default PdfGenerator;
+		return (
+			<PDFDownloadLink document={<SalesTemplate data={dataToDocument} />}>
+				{({ blob, url, loading, error }) => {
+					if (loading) {
+						return <p>Loading document...</p>
+					}
+					return (
+						<a href={url} download={`sales_raport_${startDate}--${endDate}.pdf`} className='pdf-download'>
+							Download a PDF report
+						</a>
+					)
+				}}
+			</PDFDownloadLink>
+		)
+	}
+}
+
+export default PdfGenerator

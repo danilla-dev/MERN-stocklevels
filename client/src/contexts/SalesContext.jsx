@@ -80,7 +80,6 @@ export const SalesContextProvider = memo(({ children }) => {
 	//{date: '2024-06-08', sales: 265}
 
 	const aggregatedSalesByHour = useMemo(() => createAggregatedSalesByInterval(state.sales, 4), [state.sales])
-	console.log(aggregatedSalesByHour)
 	// [
 	// 	{ interval: '0:00-0:59', totalSales: 198 },
 	// 	{ interval: '1:00-1:59', totalSales: 67 },

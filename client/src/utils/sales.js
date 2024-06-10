@@ -122,9 +122,11 @@ export const aggregateSalesByProductsAndDays = sales => {
 
 	return Object.entries(salesByProductAndDate).map(([productId, salesByDate]) => ({
 		product_id: productId,
-		sales: Object.entries(salesByDate).map(([date, quantity]) => ({
-			date,
-			quantity,
-		})),
+		sales: Object.entries(salesByDate)
+			.map(([date, quantity]) => ({
+				date,
+				quantity,
+			}))
+			.reverse(),
 	}))
 }
