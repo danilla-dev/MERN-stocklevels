@@ -10,6 +10,8 @@ const Table = ({ data, columns, size, pagination, expandable, buttons }) => {
 		}
 	})
 
+	
+
 	return (
 		<div className={`table`}>
 			<TableAntd

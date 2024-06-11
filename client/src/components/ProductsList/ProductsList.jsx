@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import NewProductForm from '../NewProductForm/NewProductForm'
 import SaleForm from '../SaleForm/SaleForm'
@@ -14,8 +14,14 @@ import { GoAlertFill } from 'react-icons/go'
 const ProductsList = () => {
 	const { products, isLoading } = useProductsContext()
 	const { isOpen, toggleOpen, setDrawerSize } = useContext(DrawerContext)
+	const { scannedEAN, setScannedEAN } = useState(null)
+	const [EANCode, setEANCode] = useState('')
+	const [EANBuffer, setEANBuffer] = useState('')
 
 	const navigate = useNavigate()
+
+	const tableRef = useRef()
+	console.log(EANBuffer)
 
 	const togglePopup = (e, size, context) => {
 		e.preventDefault()
@@ -64,8 +70,29 @@ const ProductsList = () => {
 		},
 	]
 
+	const handleKeyDown = e => {
+		console.log(e)
+		if (e.key === 'ENTER') {
+			setEANCode(EANBuffer)
+			console.log('IR scan textInput', EANBuffer)
+			e.preventDefault()
+		} else if (e.key === 'Enter') {
+			return
+		} else {
+			setEANBuffer(prevBuffer => prevBuffer + e.key)
+		}
+	}
+
+	useEffect(() => {
+		document.addEventListener('keydown', handleKeyDown)
+
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown)
+		}
+	}, [])
+
 	return (
-		<div className={`${styles.products_list_container}`}>
+		<div className={`${styles.products_list_container}`} ref={tableRef}>
 			{isLoading ? (
 				<div className='spin'>
 					<Spin className='spin' size='large'></Spin>

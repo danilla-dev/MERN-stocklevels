@@ -123,6 +123,7 @@ export const postSale = async (req, res) => {
 			{ session }
 		)
 		const saleID = saleData[0]._id
+		console.log(saleID)
 
 		for (const element of saleDataArray) {
 			const { EAN, product_id, quantity } = element
@@ -158,7 +159,8 @@ export const postSale = async (req, res) => {
 				],
 				{ session }
 			)
-			soldProductsIDS.push(sold._id)
+			soldProductsIDS.push(sold[0]._id)
+			console.log(soldProductsIDS)
 			/// update product quantity DZIAłA
 			await Product.updateOne(
 				{ user_id, product_id },
