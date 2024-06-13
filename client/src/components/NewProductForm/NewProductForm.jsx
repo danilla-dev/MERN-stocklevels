@@ -81,7 +81,7 @@ const detailsInput = [
 	},
 ]
 
-const NewProductForm = () => {
+const NewProductForm = ({ ean }) => {
 	const { dispatch } = useProductsContext()
 	const { storeData } = useStoreContext()
 	const { setAlertData } = useContext(AlertContext)
@@ -93,7 +93,7 @@ const NewProductForm = () => {
 		quantity: '',
 		category: '',
 		image: '',
-		EAN: '',
+		EAN: ean ? ean : '',
 		width: '',
 		height: '',
 		weight: '',
@@ -135,6 +135,7 @@ const NewProductForm = () => {
 						setFormData={setFormData}
 						setImageUrl={setImageUrl}
 						value={type === 'file' ? null : formData[name]}
+						disable={ean & (name === 'EAN')}
 						row
 					/>
 				)
@@ -147,7 +148,7 @@ const NewProductForm = () => {
 				name='category'
 				setFormData={setFormData}
 				value={formData.category}
-				labelText='category*'
+				labelText='Category*'
 				required
 				row
 			/>

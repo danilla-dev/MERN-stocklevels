@@ -9,7 +9,6 @@ export const DrawerContextProvider = ({ children }) => {
 	const [drawerSize, setDrawerSize] = useState('')
 	const [insideContext, setInsideContext] = useState('')
 
-
 	const toggleOpen = context => {
 		setIsOpen(prevState => !prevState)
 		setDrawerContext(context || '')
@@ -24,7 +23,6 @@ export const DrawerContextProvider = ({ children }) => {
 		} else {
 			document.body.style.overflow = 'auto'
 			document.getElementById('blur').style.display = 'none'
-
 			setScrollLocked(false)
 		}
 
